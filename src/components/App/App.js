@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
+import LoginPage from "../../views/LoginPage/LoginPage";
+import RegisterPage from "../../views/LoginPage/LoginPage";
 
 import "./App.css";
 
