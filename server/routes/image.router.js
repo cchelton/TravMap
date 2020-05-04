@@ -1,11 +1,14 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 
 /**
  * Get photos from the database.
  */
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   // check for a userID
   if (req.query.userID) {
     // if there is an id, get the images from that user
@@ -37,7 +40,7 @@ router.get("/", (req, res) => {
 /**
  * Adds a photo to the database
  */
-router.post("/add", (req, res) => {
+router.post("/add", rejectUnauthenticated, (req, res) => {
   const img_url = req.body.img_url;
   const title = req.body.title;
   const notes = req.body.notes;
@@ -71,7 +74,7 @@ router.post("/add", (req, res) => {
  * Toggles a photo's reviewed status.
  * Photo is selected by its "id".
  */
-router.put("/review/:imageID", (req, res) => {
+router.put("/review/:imageID", rejectUnauthenticated, (req, res) => {
   const imageID = req.params.imageID;
   const queryText = `UPDATE "image" SET "reviewed" = (NOT "reviewed") WHERE id=$1;`;
 
@@ -89,7 +92,7 @@ router.put("/review/:imageID", (req, res) => {
  * Deletes a photo.
  * Photo is selected by its "id".
  */
-router.delete("/delete/:imageID", (req, res) => {
+router.delete("/delete/:imageID", rejectUnauthenticated, (req, res) => {
   const imageID = req.params.imageID;
   const queryText = `DELETE FROM "image" WHERE id = $1;`;
 
