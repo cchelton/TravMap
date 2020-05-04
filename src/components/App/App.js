@@ -12,6 +12,10 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import LoginPage from "../../views/LoginPage/LoginPage";
 import RegisterPage from "../../views/LoginPage/LoginPage";
+import UserHomePage from "../../views/UserHomePage/UserHomePage";
+import UserProfilePage from "../../views/UserProfilePage/UserProfilePage";
+import ModeratorPage from "../../views/ModeratorPage/ModeratorPage";
+import Err404Page from "../../views/Err404Page/Err404Page";
 
 import "./App.css";
 
@@ -40,21 +44,31 @@ class App extends Component {
             {/* <ProtectedRoute exact path="/info" component={InfoPage} /> */}
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will be redirected to the authRedirect path provided. */}
+            <ProtectedRoute exact path="/home" component={UserHomePage} />
+            <ProtectedRoute
+              exact
+              path="/user/:userID"
+              component={UserProfilePage}
+            />
+            <ProtectedRoute
+              exact
+              path="/moderation"
+              component={ModeratorPage}
+            />
             <ProtectedRoute
               exact
               path="/login"
-              authRedirect="/admin"
+              authRedirect="/home"
               component={LoginPage}
             />
             <ProtectedRoute
               exact
               path="/registration"
-              authRedirect="/admin"
+              authRedirect="/home"
               component={RegisterPage}
             />
-
             {/* If none of the other routes matched, we will show a 404. */}
-            <Route render={() => <h1>404</h1>} />
+            <Route component={Err404Page} />
           </Switch>
         </div>
       </Router>
