@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
+import { TextField, Button } from "@material-ui/core";
 
 class RegisterPage extends Component {
   state = {
@@ -47,72 +48,68 @@ class RegisterPage extends Component {
         <form className="formPanel" onSubmit={this.registerUser}>
           <h1>Register User</h1>
           <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor("username")}
-              />
-            </label>
+            <TextField
+              label="username"
+              type="text"
+              name="username"
+              value={this.state.username}
+              onChange={this.handleInputChangeFor("username")}
+            />
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor("password")}
-              />
-            </label>
+            <TextField
+              label="password"
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleInputChangeFor("password")}
+            />
           </div>
           <div>
-            <label htmlFor="first_name">
-              First Name:
-              <input
-                type="text"
-                name="first_name"
-                value={this.state.first_name}
-                onChange={this.handleInputChangeFor("first_name")}
-              />
-            </label>
+            <TextField
+              label="First Name"
+              type="text"
+              name="first_name"
+              value={this.state.first_name}
+              onChange={this.handleInputChangeFor("first_name")}
+            />
           </div>
           <div>
-            <label htmlFor="last_name">
-              Last Name:
-              <input
-                type="text"
-                name="last_name"
-                value={this.state.last_name}
-                onChange={this.handleInputChangeFor("last_name")}
-              />
-            </label>
+            <TextField
+              label="Last Name"
+              type="text"
+              name="last_name"
+              value={this.state.last_name}
+              onChange={this.handleInputChangeFor("last_name")}
+            />
           </div>
           <div>
-            <label htmlFor="date_of_birth">
-              Date of Birth:
-              <input
-                type="text"
-                name="date_of_birth"
-                value={this.state.date_of_birth}
-                onChange={this.handleInputChangeFor("date_of_birth")}
-              />
-            </label>
+            <TextField
+              label="Date of Birth"
+              type="text"
+              name="date_of_birth"
+              value={this.state.date_of_birth}
+              onChange={this.handleInputChangeFor("date_of_birth")}
+            />
           </div>
 
           <div>
-            <input
+            <Button
+              variant="outlined"
+              color="primary"
               className="register"
               type="submit"
               name="submit"
               value="Register"
-            />
+            >
+              Register
+            </Button>
           </div>
         </form>
         <center>
-          <button
+          <Button
+            variant="outlined"
+            color="link"
             type="button"
             className="link-button"
             onClick={() => {
@@ -120,7 +117,7 @@ class RegisterPage extends Component {
             }}
           >
             Login
-          </button>
+          </Button>
         </center>
       </div>
     );
