@@ -19,6 +19,7 @@ import Err404Page from "../../views/Err404Page/Err404Page";
 
 import "./App.css";
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 class App extends Component {
   componentDidMount() {
@@ -73,6 +74,7 @@ class App extends Component {
             <Route component={Err404Page} />
           </Switch>
         </div>
+        <Footer />
       </Router>
     );
   }
