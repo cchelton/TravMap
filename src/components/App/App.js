@@ -18,6 +18,7 @@ import ModeratorPage from "../../views/ModeratorPage/ModeratorPage";
 import Err404Page from "../../views/Err404Page/Err404Page";
 
 import "./App.css";
+import Header from "../Header/Header";
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <Header />
         <div>
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
