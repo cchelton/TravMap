@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import DropZone from "../DropZone/DropZone";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function TheMap(props) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -26,9 +36,10 @@ function TheMap(props) {
           <u>THE MAP</u>
         </strong>
       </h2>
-      <IconButton className={classes.addBtn}>
+      <IconButton className={classes.addBtn} onClick={handleOpen}>
         <AddCircleIcon />
       </IconButton>
+      <DropZone handleOpen={handleOpen} handleClose={handleClose} open={open} />
     </div>
   );
 }
