@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, Typography } from "@material-ui/core";
 
 class RegisterPage extends Component {
   state = {
@@ -46,7 +46,9 @@ class RegisterPage extends Component {
           </h2>
         )}
         <form className="formPanel" onSubmit={this.registerUser}>
-          <h1>Register User</h1>
+          <Typography variant="h1" component="h1">
+            Register User
+          </Typography>
           <div>
             <TextField
               label="username"
