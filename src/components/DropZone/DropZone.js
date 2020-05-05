@@ -6,34 +6,31 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: 400,
   },
+  testWords: {
+    color: "#fff",
+  },
 }));
 
 /**
- * This is a modal, it will need open/close handlers.
+ * This is a modal, it will need open/close handlers and parent's state.
  *
- * @param {*} props Needs handleOpen and handleClose funcs
+ * The parent will need this state:
+ *   const [open, setOpen] = useState(false);
+ *
+ * @param {*} props Needs handleOpen and handleClose funcs and "open" state
  */
 function DropZone(props) {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const classes = useStyles();
   return (
-    <div>
-      <button onClick={handleOpen}>open modal</button>
-      <Modal open={open} onClose={handleClose} className={classes.modal}>
-        <div>
-          <h2>Yeet son</h2>
-        </div>
-      </Modal>
-    </div>
+    <Modal
+      open={props.open}
+      onClose={props.handleClose}
+      className={classes.modal}
+    >
+      <div>
+        <h2 className={classes.testWords}>DROP ZONE</h2>
+      </div>
+    </Modal>
   );
 }
 
