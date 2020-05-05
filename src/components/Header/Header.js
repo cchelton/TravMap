@@ -1,6 +1,11 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
 import MapIcon from "@material-ui/icons/Map";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SecurityIcon from "@material-ui/icons/Security";
