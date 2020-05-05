@@ -7,6 +7,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "inline-block",
     backgroundColor: "lightgrey",
+    height: "inherit",
+    width: "inherit",
     minHeight: "300px", //  I set min values to see this while I develop
     minWidth: "500px", //  also it makes the map able to be resized
     position: "relative",
