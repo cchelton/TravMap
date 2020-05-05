@@ -1,9 +1,10 @@
 import React from "react";
+import TheMap from "../../components/TheMap/TheMap";
 
 function UserHomePage() {
   return (
     <div>
-      <h1>HOME</h1>
+      <TheMap />
     </div>
   );
 }
