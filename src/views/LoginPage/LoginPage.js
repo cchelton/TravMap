@@ -48,7 +48,7 @@ class LoginPage extends Component {
           <h1>Login</h1>
           <div>
             <TextField
-              helperText="username"
+              label="username"
               type="text"
               name="username"
               value={this.state.username}
@@ -57,7 +57,7 @@ class LoginPage extends Component {
           </div>
           <div>
             <TextField
-              helperText="password"
+              label="password"
               type="password"
               name="password"
               value={this.state.password}
