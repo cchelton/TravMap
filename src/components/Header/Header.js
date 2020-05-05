@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
+import { withRouter } from "react-router-dom";
 import {
   makeStyles,
   AppBar,
@@ -21,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
   const classes = useStyles();
+  const userID = props.user.id;
+
+  const handleClick = (path) => (event) => {
+    props.history.push(path);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky">
@@ -28,13 +37,13 @@ function Header(props) {
           <Typography className={classes.title} variant="h6" component="h6">
             TravMap
           </Typography>
-          <IconButton>
+          <IconButton onClick={handleClick("/moderation")}>
             <SecurityIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleClick("/home")}>
             <MapIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleClick(`/user/${userID}`)}>
             <AccountCircleIcon />
           </IconButton>
         </Toolbar>
@@ -43,4 +52,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default withRouter(connect(mapStoreToProps)(Header));
