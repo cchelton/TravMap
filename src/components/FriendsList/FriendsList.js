@@ -21,17 +21,6 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    "&:focus": {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
-
 const testFriends = ["john", "taco", "charlie", "toast"];
 
 /**
@@ -56,9 +45,9 @@ function FriendsList(props) {
   const handleClose = props.handleClose;
 
   const friendElements = testFriends.map((item, index) => (
-    <StyledMenuItem key={index}>
+    <MenuItem key={index}>
       <p>{item}</p>
-    </StyledMenuItem>
+    </MenuItem>
   ));
   return (
     <StyledMenu
@@ -67,12 +56,12 @@ function FriendsList(props) {
       keepMounted
       open={Boolean(anchorEl)}
     >
-      <StyledMenuItem onClick={handleClose}>
+      <MenuItem onClick={handleClose}>
         <h5>Friends</h5>
-      </StyledMenuItem>
-      <StyledMenuItem>
+      </MenuItem>
+      <MenuItem>
         <input placeholder="search" readOnly />
-      </StyledMenuItem>
+      </MenuItem>
       {friendElements}
     </StyledMenu>
   );
