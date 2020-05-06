@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function TheMap(props) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleClose = (event) => {
+    setAnchorEl(null);
   };
 
   const classes = useStyles();
@@ -41,7 +42,7 @@ function TheMap(props) {
       <IconButton className={classes.addBtn} onClick={handleOpen}>
         <AddCircleIcon />
       </IconButton>
-      <DropZone handleOpen={handleOpen} handleClose={handleClose} open={open} />
+      <DropZone anchorEl={anchorEl} handleClose={handleClose} />
     </div>
   );
 }
