@@ -37,9 +37,12 @@ function Header(props) {
           <Typography className={classes.title} variant="h6" component="h6">
             TravMap
           </Typography>
-          <IconButton onClick={handleClick("/moderation")}>
-            <SecurityIcon />
-          </IconButton>
+          {/* only show the moderator button to moderators. Keep users away if possible. */}
+          {props.user.moderator && (
+            <IconButton onClick={handleClick("/moderation")}>
+              <SecurityIcon />
+            </IconButton>
+          )}
           <IconButton onClick={handleClick("/home")}>
             <MapIcon />
           </IconButton>
