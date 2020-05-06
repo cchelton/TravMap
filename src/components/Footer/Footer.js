@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, AppBar, Typography, ButtonBase } from "@material-ui/core";
+import FriendsList from "../FriendsList/FriendsList";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -19,11 +20,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Footer(props) {
+  const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    setAnchorEl(null);
+  };
   return (
     <AppBar className={classes.appBar}>
+      <FriendsList anchorEl={anchorEl} handleClose={handleClose} />
       <div className={classes.toolbar}>
-        <ButtonBase className={classes.friendsList}>
+        <ButtonBase className={classes.friendsList} onClick={handleOpen}>
           <Typography component="h6">Friends</Typography>
         </ButtonBase>
       </div>
