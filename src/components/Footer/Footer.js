@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { makeStyles, AppBar, Typography, ButtonBase } from "@material-ui/core";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 import FriendsList from "../FriendsList/FriendsList";
+import { makeStyles, AppBar, Typography, ButtonBase } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     top: "auto",
     bottom: 0,
+    minHeight: "34px",
   },
   toolbar: {
     display: "flex",
@@ -32,14 +35,16 @@ function Footer(props) {
   };
   return (
     <AppBar className={classes.appBar}>
-      <FriendsList anchorEl={anchorEl} handleClose={handleClose} />
-      <div className={classes.toolbar}>
-        <ButtonBase className={classes.friendsList} onClick={handleOpen}>
-          <Typography component="h6">Friends</Typography>
-        </ButtonBase>
-      </div>
+      {props.user.id && (
+        <div className={classes.toolbar}>
+          <ButtonBase className={classes.friendsList} onClick={handleOpen}>
+            <Typography component="h6">Friends</Typography>
+          </ButtonBase>
+          <FriendsList anchorEl={anchorEl} handleClose={handleClose} />
+        </div>
+      )}
     </AppBar>
   );
 }
 
-export default Footer;
+export default connect(mapStoreToProps)(Footer);
