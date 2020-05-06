@@ -1,15 +1,25 @@
 import React from "react";
-import { makeStyles, Modal } from "@material-ui/core";
+import { withStyles, Menu, MenuItem } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    position: "absolute",
-    width: 400,
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5",
   },
-  testWords: {
-    color: "#fff",
-  },
-}));
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "top",
+      horizontal: "left",
+    }}
+    transformOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+));
 
 /**
  * This is a modal, it will need open/close handlers and parent's state.
@@ -20,17 +30,21 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props Needs handleOpen and handleClose funcs and "open" state
  */
 function DropZone(props) {
-  const classes = useStyles();
+  const anchorEl = props.anchorEl;
+  const handleClose = props.handleClose;
+
   return (
-    <Modal
-      open={props.open}
-      onClose={props.handleClose}
-      className={classes.modal}
+    <StyledMenu
+      id="customized-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
     >
-      <div>
-        <h2 className={classes.testWords}>DROP ZONE</h2>
-      </div>
-    </Modal>
+      <MenuItem>
+        <h2>DROP ZONE</h2>
+      </MenuItem>
+    </StyledMenu>
   );
 }
 
