@@ -51,7 +51,7 @@ function DropZone(props) {
         title: "test image",
         notes: "test upload",
         owner_id: props.user.id, //  the owner is the logged in user
-        latitude: 0,
+        latitude: 0, // TODO: rework lat long getting. S3Uploader doesn't record this info.
         longitude: 0,
       },
     });
