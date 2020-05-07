@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 import DropZoneS3Uploader from "react-dropzone-s3-uploader";
 import { withStyles, Menu, MenuItem } from "@material-ui/core";
 
@@ -40,6 +42,19 @@ function DropZone(props) {
   const handleFinishedUpload = (info) => {
     console.log("File uploaded with filename", info.filename);
     console.log("Access it on s3 at", info.fileUrl);
+    console.log(info);
+
+    props.dispatch({
+      type: "POST_IMAGE",
+      payload: {
+        img_url: info.fileUrl,
+        title: "test image",
+        notes: "test upload",
+        owner_id: props.user.id, //  the owner is the logged in user
+        latitude: 0,
+        longitude: 0,
+      },
+    });
   };
 
   const uploadOptions = {
@@ -71,4 +86,4 @@ function DropZone(props) {
   );
 }
 
-export default DropZone;
+export default connect(mapStoreToProps)(DropZone);
