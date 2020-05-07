@@ -43,14 +43,7 @@ function* postImage(action) {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     };
-    yield axios
-      .post("/api/image/add", action.payload, config)
-      .then((response) => {
-        response.sendStatus(201);
-      })
-      .catch((err) => {
-        console.log("ERR in img add:", err);
-      });
+    yield axios.post("/api/image/add", action.payload, config);
     yield put({ type: "GET_IMAGES" }); // I may need to put an id here if a user's map breaks on upload and displays all images.
   } catch (err) {
     console.log("Image post request failed", err);
