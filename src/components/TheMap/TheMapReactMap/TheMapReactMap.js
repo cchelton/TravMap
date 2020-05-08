@@ -6,8 +6,8 @@ class TheMapReactMap extends Component {
     viewport: {
       width: this.props.mapWidth,
       height: this.props.mapHeight,
-      latitude: 37.7577,
-      longitude: -122.4376,
+      latitude: 39.0997,
+      longitude: -94.5786,
       zoom: 8,
     },
   };
@@ -15,6 +15,7 @@ class TheMapReactMap extends Component {
   render() {
     return (
       <ReactMapGL
+        mapStyle="mapbox://styles/mapbox/outdoors-v11"
         {...this.state.viewport}
         onViewportChange={(viewport) => this.setState({ viewport })}
       />
