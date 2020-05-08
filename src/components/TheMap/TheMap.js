@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   addBtn: {
     position: "absolute",
-    right: 7,
-    bottom: 7,
+    right: 10,
+    bottom: 10,
   },
 }));
 
@@ -25,7 +25,8 @@ function TheMap(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget);
+    setAnchorEl(document.getElementById("mapDiv"));
   };
 
   const handleClose = (event) => {
@@ -34,7 +35,7 @@ function TheMap(props) {
 
   const classes = useStyles();
   return (
-    <div className={classes.container}>
+    <div id="mapDiv" className={classes.container}>
       <TheMapReactMap mapWidth={props.mapWidth} mapHeight={props.mapHeight} />
       <IconButton className={classes.addBtn} onClick={handleOpen}>
         <AddCircleIcon />

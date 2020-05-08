@@ -63,6 +63,14 @@ function DropZone(props) {
       updateSPB(false);
     }
   };
+  //
+  // S3Uploader Stuff
+
+  const uploadOptions = {
+    server: "http://localhost:5000",
+    signingUrlQueryParams: { uploadType: "avatar" },
+  };
+  const s3Url = "https://travmap-bucket.s3.amazonaws.com";
 
   const handlePost = (event) => {
     const openCageURL = `https://api.opencagedata.com/geocode/v1/json?q=${addressBox}&key=${process.env.REACT_APP_OPENCAGE_API_KEY}&language=en&pretty=1`;
@@ -83,15 +91,6 @@ function DropZone(props) {
       handleClose();
     });
   };
-
-  //
-  // S3Uploader Stuff
-
-  const uploadOptions = {
-    server: "http://localhost:5000",
-    signingUrlQueryParams: { uploadType: "avatar" },
-  };
-  const s3Url = "https://travmap-bucket.s3.amazonaws.com";
 
   const handleFinishedUpload = (info) => {
     console.log("File uploaded with filename", info.filename);
