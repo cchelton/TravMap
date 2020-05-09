@@ -37,7 +37,7 @@ class TheMapReactMap extends Component {
         longitude={Number(image.longitude)}
         offsetLeft={-20}
         offsetTop={-10}
-        key={image}
+        key={index}
       >
         <img className={classes.img} src={image.img_url} alt={image.title} />
       </Marker>
