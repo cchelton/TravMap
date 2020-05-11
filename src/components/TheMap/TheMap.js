@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DropZone from "../DropZone/DropZone";
+import TheMapReactMap from "./TheMapReactMap/TheMapReactMap";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   addBtn: {
     position: "absolute",
-    right: 0,
-    bottom: 0,
+    right: 10,
+    bottom: 10,
   },
 }));
 
@@ -24,7 +25,8 @@ function TheMap(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget);
+    setAnchorEl(document.getElementById("mapDiv"));
   };
 
   const handleClose = (event) => {
@@ -33,12 +35,8 @@ function TheMap(props) {
 
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <h2>
-        <strong>
-          <u>THE MAP</u>
-        </strong>
-      </h2>
+    <div id="mapDiv" className={classes.container}>
+      <TheMapReactMap mapWidth={props.mapWidth} mapHeight={props.mapHeight} />
       <IconButton className={classes.addBtn} onClick={handleOpen}>
         <AddCircleIcon />
       </IconButton>

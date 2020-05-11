@@ -14,7 +14,7 @@ function UserHomePage() {
   const classes = useStyles();
   return (
     <div className={classes.theMapContainer}>
-      <TheMap />
+      <TheMap mapWidth={700} mapHeight={500} />
     </div>
   );
 }

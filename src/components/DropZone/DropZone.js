@@ -20,24 +20,24 @@ const StyledMenu = withStyles({
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: "top",
-      horizontal: "left",
+      vertical: "center",
+      horizontal: "center",
     }}
     transformOrigin={{
-      vertical: "bottom",
-      horizontal: "right",
+      vertical: "center",
+      horizontal: "center",
     }}
     {...props}
   />
 ));
 
 /**
- * This is a modal, it will need open/close handlers and parent's state.
+ * This is a modal, it will need an anchorEl state from parent.
  *
  * The parent will need this state:
- *   const [open, setOpen] = useState(false);
+ *   const [anchorEl, setAnchorEl] = useState(null);
  *
- * @param {*} props Needs handleOpen and handleClose funcs and "open" state
+ * @param {*} props Needs anchorEl state
  */
 function DropZone(props) {
   const [addressBox, updateAddressBox] = useState(""); //  address input field state
@@ -63,6 +63,14 @@ function DropZone(props) {
       updateSPB(false);
     }
   };
+  //
+  // S3Uploader Stuff
+
+  const uploadOptions = {
+    server: "http://localhost:5000",
+    signingUrlQueryParams: { uploadType: "avatar" },
+  };
+  const s3Url = "https://travmap-bucket.s3.amazonaws.com";
 
   const handlePost = (event) => {
     const openCageURL = `https://api.opencagedata.com/geocode/v1/json?q=${addressBox}&key=${process.env.REACT_APP_OPENCAGE_API_KEY}&language=en&pretty=1`;
@@ -84,15 +92,6 @@ function DropZone(props) {
     });
   };
 
-  //
-  // S3Uploader Stuff
-
-  const uploadOptions = {
-    server: "http://localhost:5000",
-    signingUrlQueryParams: { uploadType: "avatar" },
-  };
-  const s3Url = "https://travmap-bucket.s3.amazonaws.com";
-
   const handleFinishedUpload = (info) => {
     console.log("File uploaded with filename", info.filename);
     console.log("Access it on s3 at", info.fileUrl);
@@ -109,7 +108,6 @@ function DropZone(props) {
 
   return (
     <StyledMenu
-      id="customized-menu"
       anchorEl={anchorEl}
       keepMounted
       open={Boolean(anchorEl)}
