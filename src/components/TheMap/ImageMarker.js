@@ -11,8 +11,8 @@ import { Marker } from "react-map-gl";
 
 const useStyles = makeStyles({
   img: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: "50%",
   },
   circle: {
@@ -49,6 +49,8 @@ const StyledMenu = withStyles({
 function ImageMarker(props) {
   const latitude = Number(props.image.latitude);
   const longitude = Number(props.image.longitude);
+  const offsetLeft = -25;
+  const offsetTop = -25;
   const img_url = props.image.img_url;
   const title = props.image.title;
   const notes = props.image.notes;
@@ -67,7 +69,12 @@ function ImageMarker(props) {
   };
 
   return (
-    <Marker latitude={latitude} longitude={longitude}>
+    <Marker
+      latitude={latitude}
+      longitude={longitude}
+      offsetLeft={offsetLeft}
+      offsetTop={offsetTop}
+    >
       <ButtonBase className={classes.circle} onClick={handleOpen}>
         <img className={classes.img} src={img_url} alt={title} />
       </ButtonBase>
