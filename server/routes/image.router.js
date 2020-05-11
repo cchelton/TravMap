@@ -8,32 +8,51 @@ const {
 /**
  * Get photos from the database.
  */
-router.get("/", rejectUnauthenticated, (req, res) => {
-  // check for a userID
-  if (req.query.userID) {
-    // if there is an id, get the images from that user
-    const queryText = `SELECT * FROM "image" WHERE "owner_id" = $1 ORDER BY "id" ASC;`;
+router.get("/", (req, res) => {
+  let queryText = "";
 
-    pool
-      .query(queryText, [req.query.userID])
-      .then((response) => {
-        res.send(response.rows);
-      })
-      .catch((err) => {
-        res.sendStatus(500);
-      });
-  } else {
-    // if no userID was specified, get all the images
-    const queryText = `SELECT * FROM "image" ORDER BY "id" ASC;`;
+  switch (req.query.ids) {
+    case typeof req.query.ids === "number":
+      // if one id is given, get that user's images
+      queryText = `SELECT * FROM "image" WHERE "owner_id" = $1 ORDER BY "id" ASC;`;
 
-    pool
-      .query(queryText)
-      .then((response) => {
-        res.send(response.rows);
-      })
-      .catch((err) => {
-        res.sendStatus(500);
+      pool
+        .query(queryText, [req.query.ids])
+        .then((response) => {
+          res.send(response.rows);
+        })
+        .catch((err) => {
+          res.sendStatus(500);
+        });
+    case typeof req.query.ids === "object":
+      // if multiple ids are given, build queryText and queryData
+      // start and open the parenthesis
+      let queryData = [];
+      queryText = `SELECT * FROM "image" WHERE (`;
+
+      let queryFrags = req.query.ids.map((id, index) => {
+        queryData.push(id);
+        return `"owner_id" = $${index + 1}`;
       });
+
+      // join the fragments with an OR and add to queryText
+      queryText = `${queryText}${queryFrags.join(` OR `)}`;
+
+      // close the parenthesis and add ORDER BY clause
+      queryText = `${queryText}) ORDER BY "id" ASC;`;
+
+    default:
+      // if no ids were specified, get all the images
+      queryText = `SELECT * FROM "image" ORDER BY "id" ASC;`;
+
+      pool
+        .query(queryText)
+        .then((response) => {
+          res.send(response.rows);
+        })
+        .catch((err) => {
+          res.sendStatus(500);
+        });
   }
 });
 

@@ -4,7 +4,7 @@ import { put, takeLatest } from "redux-saga/effects";
 /**
  * Gets images from database.
  *
- * Has optional action.payload. Payload should be a user's id.
+ * Has optional action.payload. Payload should be a user's id, or an array of ids.
  * If there is a payload, results will be filtered by the ID given.
  */
 function* getImages(action) {
@@ -14,12 +14,14 @@ function* getImages(action) {
       withCredentials: true,
     };
 
-    // if there was a userID, send it as query params.
-    const axiosURL = action.payload
-      ? `/api/image/?userID=${action.payload}`
-      : `/api/image`;
+    // if any ids were given, send them as query params.
+    if (action.payload) {
+      config.params = {
+        ids: action.payload,
+      };
+    }
 
-    const response = yield axios.get(axiosURL, config);
+    const response = yield axios.get(`/api/image`, config);
     // set those images to the image reducer.
     yield put({ type: "SET_IMAGES", payload: response.data });
   } catch (err) {
