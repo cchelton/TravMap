@@ -42,8 +42,4 @@ class TheMapReactMap extends Component {
   }
 }
 
-TheMapReactMap.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default connect(mapStoreToProps)(TheMapReactMap);
