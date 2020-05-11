@@ -2,14 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../../redux/mapStoreToProps";
-import ReactMapGL, { Marker } from "react-map-gl";
-import { withStyles } from "@material-ui/core/styles";
-
-const styles = (theme) => ({
-  img: {
-    maxWidth: 100,
-  },
-});
+import ReactMapGL from "react-map-gl";
+import ImageMarker from "../ImageMarker";
 
 class TheMapReactMap extends Component {
   state = {
@@ -30,17 +24,10 @@ class TheMapReactMap extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const imageMarkers = this.props.store.image.map((image, index) => (
-      <Marker
-        latitude={Number(image.latitude)}
-        longitude={Number(image.longitude)}
-        offsetLeft={-20}
-        offsetTop={-10}
-        key={index}
-      >
-        <img className={classes.img} src={image.img_url} alt={image.title} />
-      </Marker>
+      <ImageMarker image={image} key={index}>
+        <img src={image.img_url} alt={image.title} />
+      </ImageMarker>
     ));
 
     return (
@@ -59,4 +46,4 @@ TheMapReactMap.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStoreToProps)(withStyles(styles)(TheMapReactMap));
+export default connect(mapStoreToProps)(TheMapReactMap);
