@@ -22,7 +22,9 @@ function* getImages(action) {
     const response = yield axios.get(axiosURL, config);
     // set those images to the image reducer.
     yield put({ type: "SET_IMAGES", payload: response.data });
-  } catch (error) {}
+  } catch (err) {
+    console.log("Image get request failed", err);
+  }
 }
 
 /**
