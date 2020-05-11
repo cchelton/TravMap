@@ -85,6 +85,7 @@ function FriendsList(props) {
       anchorEl={anchorEl}
       keepMounted
       open={Boolean(anchorEl)}
+      onClose={handleClose}
     >
       <MenuItem onClick={handleClose}>
         <Typography variant="subtitle1" component="p">
