@@ -18,6 +18,10 @@ const useStyles = makeStyles({
   circle: {
     borderRadius: "50%",
   },
+  expandedImg: {
+    maxWidth: "100vh",
+    maxHeight: "80vh",
+  },
 });
 
 const StyledMenu = withStyles({
@@ -59,7 +63,6 @@ function ImageMarker(props) {
 
   //  open image menu
   const handleOpen = (event) => {
-    console.log(event.currentTarget);
     setAnchorEl(document.getElementById("mapDiv"));
   };
 
@@ -85,7 +88,7 @@ function ImageMarker(props) {
         onClose={handleClose}
       >
         <MenuItem disableRipple>
-          <img src={img_url} alt={title} />
+          <img className={classes.expandedImg} src={img_url} alt={title} />
         </MenuItem>
         <MenuItem disableRipple>
           <Typography variant="caption" component="p">
