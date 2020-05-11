@@ -32,12 +32,12 @@ const StyledMenu = withStyles({
 ));
 
 /**
- * This is a modal, it will need open/close handlers and parent's state.
+ * This is a modal, it will need an anchorEl state from parent.
  *
  * The parent will need this state:
- *   const [open, setOpen] = useState(false);
+ *   const [anchorEl, setAnchorEl] = useState(null);
  *
- * @param {*} props Needs handleOpen and handleClose funcs and "open" state
+ * @param {*} props Needs anchorEl state
  */
 function DropZone(props) {
   const [addressBox, updateAddressBox] = useState(""); //  address input field state
@@ -108,7 +108,6 @@ function DropZone(props) {
 
   return (
     <StyledMenu
-      id="customized-menu"
       anchorEl={anchorEl}
       keepMounted
       open={Boolean(anchorEl)}
