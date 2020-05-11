@@ -7,6 +7,7 @@ import {
   MenuItem,
   Typography,
   TextField,
+  Checkbox,
 } from "@material-ui/core";
 
 const StyledMenu = withStyles({
@@ -50,8 +51,29 @@ function FriendsList(props) {
   const anchorEl = props.anchorEl;
   const handleClose = props.handleClose;
 
+  const handleChange = (id) => (event) => {
+    const userID = props.store.user.id;
+    const friendID = id;
+    let displayIDs = props.store.friend
+      .map((friend) => friend.friend_id)
+      .filter((friend) => friend.friend_id !== id);
+
+    props.dispatch({
+      type: "TOGGLE_FRIEND_PHOTO_DISPLAY",
+      payload: {
+        userID,
+        friendID,
+        displayIDs,
+      },
+    });
+  };
+
   const friendElements = props.store.friend.map((friend, index) => (
     <MenuItem key={index}>
+      <Checkbox
+        checked={friend.display_photos}
+        onChangeCapture={handleChange(friend.friend_id)}
+      />
       <Typography variant="body1" component="p">
         {friend.friend_name}
       </Typography>

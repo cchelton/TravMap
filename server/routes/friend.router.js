@@ -8,11 +8,10 @@ const {
 // gets a user's friends list
 router.get("/:userID", rejectUnauthenticated, (req, res) => {
   const userID = req.params.userID;
-  const queryText = `SELECT "user_relationship"."user_id" as "friend_id", "user"."username" as "friend_name" FROM "user_relationship"
+  const queryText = `SELECT "user_relationship"."user_id" as "friend_id", "user"."username" as "friend_name", "display_user_photos_on_friend_map" as "display_photos" FROM "user_relationship"
   JOIN "user" on "user"."id" = "user_relationship"."user_id"
   WHERE ("user_relationship"."friend_id" = $1 AND "user_relationship"."confirmed_request")
-  ORDER BY "friend_name" ASC;
-  `;
+  ORDER BY "friend_name" ASC;`;
 
   pool
     .query(queryText, [userID])
@@ -38,5 +37,23 @@ router.get("/checkStatus", rejectUnauthenticated, (req, res) => {
 router.put("/confirm/:incomingID");
 
 // deny incoming friend request
+
+// toggle display of friend's photos
+router.put("/toggleDisplay/:id", rejectUnauthenticated, (req, res) => {
+  const id = req.params.id;
+  const queryText = `UPDATE "user_relationship"
+  SET "display_user_photos_on_friend_map" = NOT "display_user_photos_on_friend_map"
+  WHERE "user_id" = $1;`;
+
+  pool
+    .query(queryText, [id])
+    .then((response) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("err toggling friend photo display:", err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;
