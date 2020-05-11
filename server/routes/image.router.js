@@ -8,7 +8,7 @@ const {
 /**
  * Get photos from the database.
  */
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   let queryText = "";
 
   switch (req.query.ids) {
