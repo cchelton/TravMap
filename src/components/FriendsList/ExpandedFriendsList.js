@@ -50,6 +50,7 @@ const StyledMenu = withStyles({
  */
 class FriendsList extends Component {
   handleChange = (id) => (event) => {
+    event.stopPropagation();
     const userID = this.props.store.user.id;
     const friendID = id;
     let displayIDs = this.props.store.friend.filter((friend) =>
@@ -81,7 +82,7 @@ class FriendsList extends Component {
       <MenuItem key={index} onClick={this.handleFriendClick(friend.friend_id)}>
         <Checkbox
           checked={friend.display_photos}
-          onChangeCapture={this.handleChange(friend.friend_id)}
+          onClickCapture={this.handleChange(friend.friend_id)}
         />
         <Typography variant="body1" component="p">
           {friend.friend_name}
