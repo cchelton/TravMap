@@ -5,6 +5,7 @@ import user from "./user.reducer";
 import image from "./image.reducer";
 import friend from "./friend.reducer";
 import displayIDs from "./displayIDs.reducer";
+import focusedUser from "./focusedUser.reducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   image, // will have an array of images to show
   friend, // will have an array of user's friends
   displayIDs, // whose images are displayed when not on a user page
+  focusedUser, // user to display on UserProfilePage based on user_id
 });
 
 export default rootReducer;

@@ -51,4 +51,18 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
+// get necessary user data for profile pages
+router.get("/focus/:userID", rejectUnauthenticated, (req, res) => {
+  const userID = req.params.userID;
+  const queryText = `SELECT "username", "first_name", "last_name", "moderator" FROM "user" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [userID])
+    .then((response) => {
+      res.send(response.rows);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
