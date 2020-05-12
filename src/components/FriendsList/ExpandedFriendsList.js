@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import {
@@ -47,20 +47,17 @@ const StyledMenu = withStyles({
     setAnchorEl(null);
   };
  */
-function FriendsList(props) {
-  const anchorEl = props.anchorEl;
-  const handleClose = props.handleClose;
-
-  const handleChange = (id) => (event) => {
-    const userID = props.store.user.id;
+class FriendsList extends Component {
+  handleChange = (id) => (event) => {
+    const userID = this.props.store.user.id;
     const friendID = id;
-    let displayIDs = props.store.friend.filter((friend) =>
-      friend.display_photos ? false : id === friend.friend_id
+    let displayIDs = this.props.store.friend.filter((friend) =>
+      friend.display_photos ? id !== friend.friend_id : id === friend.friend_id
     );
 
     // add friend IDs
     displayIDs = displayIDs.map((friend) => friend.friend_id);
-    props.dispatch({
+    this.props.dispatch({
       type: "TOGGLE_FRIEND_PHOTO_DISPLAY",
       payload: {
         userID,
@@ -70,36 +67,41 @@ function FriendsList(props) {
     });
   };
 
-  const friendElements = props.store.friend.map((friend, index) => (
-    <MenuItem key={index}>
-      <Checkbox
-        checked={friend.display_photos}
-        onChangeCapture={handleChange(friend.friend_id)}
-      />
-      <Typography variant="body1" component="p">
-        {friend.friend_name}
-      </Typography>
-    </MenuItem>
-  ));
-  return (
-    <StyledMenu
-      id="customized-menu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-    >
-      <MenuItem onClick={handleClose}>
-        <Typography variant="subtitle1" component="p">
-          Friends
+  render() {
+    const anchorEl = this.props.anchorEl;
+    const handleClose = this.props.handleClose;
+
+    const friendElements = this.props.store.friend.map((friend, index) => (
+      <MenuItem key={index}>
+        <Checkbox
+          checked={friend.display_photos}
+          onChangeCapture={this.handleChange(friend.friend_id)}
+        />
+        <Typography variant="body1" component="p">
+          {friend.friend_name}
         </Typography>
       </MenuItem>
-      <MenuItem>
-        <TextField margin="dense" placeholder="search" disabled />
-      </MenuItem>
-      {friendElements}
-    </StyledMenu>
-  );
+    ));
+    return (
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <Typography variant="subtitle1" component="p">
+            Friends
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <TextField margin="dense" placeholder="search" disabled />
+        </MenuItem>
+        {friendElements}
+      </StyledMenu>
+    );
+  }
 }
 
 export default connect(mapStoreToProps)(FriendsList);
