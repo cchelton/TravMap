@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../../redux/mapStoreToProps";
 import ReactMapGL from "react-map-gl";
-import ImageMarker from "../ImageMarker";
+import ImageMarker from "./ImageMarker";
 
 class TheMapReactMap extends Component {
   state = {
@@ -18,24 +18,22 @@ class TheMapReactMap extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: "GET_IMAGES",
-      payload: this.props.user.id,
+      payload: this.props.customDisplayID || this.props.store.displayIDs, // display the ids from friends list or custom id for user pages
     });
   }
 
   render() {
-    const imageMarkers = this.props.store.image.map((image, index) => (
-      <ImageMarker image={image} key={index}>
-        <img src={image.img_url} alt={image.title} />
-      </ImageMarker>
-    ));
-
     return (
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         {...this.state.viewport}
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
-        {imageMarkers}
+        {this.props.store.image.map((image, index) => (
+          <ImageMarker image={image} key={index}>
+            <img src={image.img_url} alt={image.title} />
+          </ImageMarker>
+        ))}
       </ReactMapGL>
     );
   }

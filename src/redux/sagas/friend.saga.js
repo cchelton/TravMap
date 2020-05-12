@@ -16,6 +16,14 @@ function* getFriends(action) {
 
     const response = yield axios.get(`/api/friend/${userID}`, config);
     yield put({ type: "SET_FRIENDS", payload: response.data });
+
+    // keep the map display ids current whenever friends are updated
+    let displayIDs = response.data
+      .filter((friend) => friend.display_photos)
+      .map((friend) => friend.friend_id);
+
+    yield put({ type: "SET_DISPLAY_IDS", payload: [userID, ...displayIDs] });
+    yield put({ type: "GET_IMAGES", payload: [userID, ...displayIDs] }); //  Do this here so the initial GET_FRIENDS request loads the initial map
   } catch (err) {
     console.log("Friend get request failed:", err);
   }
