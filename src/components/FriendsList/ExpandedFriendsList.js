@@ -54,10 +54,12 @@ function FriendsList(props) {
   const handleChange = (id) => (event) => {
     const userID = props.store.user.id;
     const friendID = id;
-    let displayIDs = props.store.friend
-      .map((friend) => friend.friend_id)
-      .filter((friend) => friend.friend_id !== id);
+    let displayIDs = props.store.friend.filter((friend) =>
+      friend.display_photos ? false : id === friend.friend_id
+    );
 
+    // add friend IDs
+    displayIDs = displayIDs.map((friend) => friend.friend_id);
     props.dispatch({
       type: "TOGGLE_FRIEND_PHOTO_DISPLAY",
       payload: {

@@ -27,6 +27,8 @@ function* getFriends(action) {
  * Expected payload: { userID: num, friendID: num, displayIDs: arr }
  *
  * friendID is the one toggled.
+ *
+ * displayIDs are the friends toggled on. (remove the friendID)
  */
 function* toggleFriendPhotoDisplay(action) {
   try {
@@ -40,7 +42,7 @@ function* toggleFriendPhotoDisplay(action) {
 
     yield axios.put(`/api/friend/toggleDisplay/${friendID}`, config);
     yield put({ type: "GET_FRIENDS", payload: userID });
-    yield put({ type: "GET_IMAGES", payload: displayIDs });
+    yield put({ type: "GET_IMAGES", payload: [userID, ...displayIDs] });
   } catch (err) {
     console.log("Friend photo display toggle failed:", err);
   }
