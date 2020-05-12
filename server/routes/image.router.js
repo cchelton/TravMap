@@ -11,7 +11,6 @@ const {
  */
 router.get("/", rejectUnauthenticated, (req, res) => {
   let queryText = "";
-  console.log("ids type", typeof req.query.ids);
 
   if (typeof req.query.ids === "string") {
     // if one id is given, get that user's images
@@ -41,8 +40,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
     // close the parenthesis and add ORDER BY clause
     queryText = `${queryText}) ORDER BY "id" ASC;`;
-    console.log(queryText);
-
     pool
       .query(queryText, queryData)
       .then((response) => {
