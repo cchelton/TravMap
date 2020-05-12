@@ -33,6 +33,7 @@ function* focusUser(action) {
 
   const response = yield axios.get(`/api/user/focus/${userID}`, config);
   yield put({ type: "SET_FOCUSED_USER", payload: response.data[0] }); //  there is only one user, get it from index[0]
+  yield put({ type: "GET_FOCUSED_USER_IMAGES", payload: userID });
 }
 
 function* userSaga() {

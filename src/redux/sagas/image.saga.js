@@ -30,6 +30,31 @@ function* getImages(action) {
 }
 
 /**
+ * Gets only one user's images from database, and stores them in focusedUserImage reducer to display customDisplayID Maps.
+ */
+function* getFocusedUserImages(action) {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+
+    // if any ids were given, send them as query params.
+    if (action.payload) {
+      config.params = {
+        ids: action.payload,
+      };
+    }
+
+    const response = yield axios.get(`/api/image`, config);
+    // set those images to the image reducer.
+    yield put({ type: "SET_FOCUSED_USER_IMAGES", payload: response.data });
+  } catch (err) {
+    console.log("Image get request failed", err);
+  }
+}
+
+/**
  * Adds an image to database.
  *
  * expected action.payload = {
@@ -57,6 +82,7 @@ function* postImage(action) {
 function* imageSaga() {
   yield takeLatest("POST_IMAGE", postImage);
   yield takeLatest("GET_IMAGES", getImages);
+  yield takeLatest("GET_FOCUSED_USER_IMAGES", getFocusedUserImages);
 }
 
 export default imageSaga;
