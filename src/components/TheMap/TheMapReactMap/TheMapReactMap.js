@@ -15,16 +15,6 @@ class TheMapReactMap extends Component {
     },
   };
 
-  componentDidMount() {
-    const dispatchType = this.props.customDisplayID
-      ? "GET_FOCUSED_USER_IMAGES"
-      : "GET_IMAGES";
-    this.props.dispatch({
-      type: dispatchType,
-      payload: this.props.customDisplayID || this.props.store.displayIDs, // display the ids from friends list or custom id for user pages
-    });
-  }
-
   render() {
     const useCustomID = this.props.customDisplayID ? true : false; // which display mode to use? User's Home Map or single user map
 
