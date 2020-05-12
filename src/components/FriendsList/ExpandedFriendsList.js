@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import {
   withStyles,
@@ -67,12 +68,17 @@ class FriendsList extends Component {
     });
   };
 
+  // link to friend page
+  handleFriendClick = (friendID) => (event) => {
+    this.props.history.push(`/user/${friendID}`);
+  };
+
   render() {
     const anchorEl = this.props.anchorEl;
     const handleClose = this.props.handleClose;
 
     const friendElements = this.props.store.friend.map((friend, index) => (
-      <MenuItem key={index}>
+      <MenuItem key={index} onClick={this.handleFriendClick(friend.friend_id)}>
         <Checkbox
           checked={friend.display_photos}
           onChangeCapture={this.handleChange(friend.friend_id)}
@@ -104,4 +110,4 @@ class FriendsList extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(FriendsList);
+export default withRouter(connect(mapStoreToProps)(FriendsList));
