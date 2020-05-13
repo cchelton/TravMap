@@ -129,7 +129,7 @@ router.put("/request/confirm", (req, res) => {
       pool
         .query(queryText, queryData)
         .then((response) => {
-          res.send(200); // DONE! send OK
+          res.sendStatus(200); // DONE! send OK
         })
         .catch((err) => {
           console.log(
@@ -153,6 +153,30 @@ router.put("/request/confirm", (req, res) => {
 });
 
 // deny incoming friend request
+router.put("/request/deny", (req, res) => {
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
+
+  const queryData = [userID, friendID];
+  const queryText = `DELETE FROM "user_relationship"
+  WHERE "user_id" = $2 AND "friend_id" = $1;`;
+
+  // delete the incoming friend request. Because when requests are created relating user_id in the database
+  // to the user that created the friend request, this query needs to delete the request where
+  // "user_id" = friendID and "friend_id" = userID
+  pool
+    .query(queryText, queryData)
+    .then((response) => {
+      res.sendStatus(200); // DONE! send OK
+    })
+    .catch((err) => {
+      console.log(`Deny Friend Request Error:`);
+      console.log(err);
+      console.log(`queryText:`, queryText);
+
+      res.sendStatus(500);
+    });
+});
 
 // toggle display of friend's photos
 router.put("/toggleDisplay/:id", rejectUnauthenticated, (req, res) => {
