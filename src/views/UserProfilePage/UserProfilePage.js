@@ -2,25 +2,30 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import TheMap from "../../components/TheMap/TheMap";
+import AddFriendButton from "../../components/AddFriendButton/AddFriendButton";
 import Err404Page from "../Err404Page/Err404Page";
 import { Typography } from "@material-ui/core";
 import SecurityIcon from "@material-ui/icons/Security";
 
 function UserProfilePage(props) {
-  const userID = props.match.params.userID;
+  const userPageID = Number(props.match.params.userID); //  comes as string. React doesn't like != so this needs to be num for comparison.
+  const currentUserID = props.store.user.id;
   const isModerator = props.store.focusedUser.moderator;
   const username = props.store.focusedUser.username;
   const first_name = props.store.focusedUser.first_name;
   const last_name = props.store.focusedUser.last_name;
+  const confirmed_request = props.store.focusedUser.confirmed_request;
 
   useEffect(() => {
     props.dispatch({
       type: "FOCUS_USER",
-      payload: userID,
+      payload: {
+        userPageID,
+        currentUserID,
+      },
     });
   }, [props.match.params.userID]); // refocus whenever the page changes. This fixes the issue that navigating from friends list wouldn't update page info.
-
-  try {
+  if (username) {
     return (
       <div>
         <div>
@@ -36,13 +41,16 @@ function UserProfilePage(props) {
               Moderator
             </Typography>
           )}
+          {userPageID !== currentUserID && (
+            <AddFriendButton confirmed_request={confirmed_request} />
+          )}
         </div>
         <div>
-          <TheMap mapWidth={700} mapHeight={500} customDisplayID={userID} />
+          <TheMap mapWidth={700} mapHeight={500} customDisplayID={userPageID} />
         </div>
       </div>
     );
-  } catch (err) {
+  } else {
     return <Err404Page />;
   }
 }
