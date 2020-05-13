@@ -26,14 +26,8 @@ router.get("/:userID", rejectUnauthenticated, (req, res) => {
     });
 });
 
-// check friend status. Possible outcomes: "FRIEND", "REQUESTED", false
-// 2 required query params: userID and checkingID
-router.get("/checkStatus", rejectUnauthenticated, (req, res) => {
-  const userID = req.query.userID;
-  const checkingID = req.query.checkingID;
-});
-
 // make friend request
+// cole please learn pg-promise. it will make your life easier
 router.post("/add", (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
@@ -42,6 +36,8 @@ router.post("/add", (req, res) => {
   let queryText = `SELECT "id" FROM "user_relationship"
   WHERE "user_id" = $2 AND "friend_id" = $1;`;
 
+  // there are 2 possible outcomes, there is an existing friend request, or there is not.
+  // this route has 2 possible res.send()'s to handle that.
   // first, check for an outstanding friend request from the friend to the user
   pool
     .query(queryText, queryData)
@@ -114,7 +110,47 @@ router.post("/add", (req, res) => {
 });
 
 // confirms incoming friend request
-router.put("/confirm/:incomingID");
+router.put("/request/confirm", (req, res) => {
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
+
+  const queryData = [userID, friendID];
+  let queryText = `DELETE FROM "user_relationship"
+  WHERE ("user_id" = $1 AND "friend_id" = $2) OR ("user_id" = $2 AND "friend_id" = $1);`;
+
+  // first delete the outstanding request
+  pool
+    .query(queryText, queryData)
+    .then((response) => {
+      queryText = `INSERT INTO "user_relationship" ("user_id", "friend_id", "confirmed_request", "display_user_photos_on_friend_map")
+      VALUES ($1, $2, TRUE, TRUE), ($2, $1, TRUE, TRUE);`;
+
+      // then create a confirmed relationship between the user and the friend
+      pool
+        .query(queryText, queryData)
+        .then((response) => {
+          res.send(200); // DONE! send OK
+        })
+        .catch((err) => {
+          console.log(
+            `Confirm Friend Request Error in: then create a confirmed relationship:`
+          );
+          console.log(err);
+          console.log(`queryText:`, queryText);
+
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.log(
+        `Confirm Friend Request Error in: first delete the outstanding request:`
+      );
+      console.log(err);
+      console.log(`queryText:`, queryText);
+
+      res.sendStatus(500);
+    });
+});
 
 // deny incoming friend request
 
