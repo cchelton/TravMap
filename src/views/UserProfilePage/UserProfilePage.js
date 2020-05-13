@@ -10,12 +10,13 @@ import SecurityIcon from "@material-ui/icons/Security";
 function UserProfilePage(props) {
   const userPageID = Number(props.match.params.userID); //  comes as string. React doesn't like != so this needs to be num for comparison.
   const currentUserID = props.store.user.id;
-  const isModerator = props.store.focusedUser.moderator;
-  const username = props.store.focusedUser.username;
-  const first_name = props.store.focusedUser.first_name;
-  const last_name = props.store.focusedUser.last_name;
-  const confirmed_request = props.store.focusedUser.confirmed_request;
-
+  const {
+    username,
+    first_name,
+    last_name,
+    confirmed_request,
+    isModerator,
+  } = props.store.focusedUser; //  get info from reducer
   useEffect(() => {
     props.dispatch({
       type: "FOCUS_USER",
