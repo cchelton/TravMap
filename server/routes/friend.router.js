@@ -28,7 +28,7 @@ router.get("/:userID", rejectUnauthenticated, (req, res) => {
 
 // make friend request
 // cole please learn pg-promise. it will make your life easier
-router.post("/add", (req, res) => {
+router.post("/add", rejectUnauthenticated, (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
 
@@ -110,7 +110,7 @@ router.post("/add", (req, res) => {
 });
 
 // confirms incoming friend request
-router.put("/request/confirm", (req, res) => {
+router.put("/request/confirm", rejectUnauthenticated, (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
 
@@ -153,7 +153,7 @@ router.put("/request/confirm", (req, res) => {
 });
 
 // deny incoming friend request
-router.put("/request/deny", (req, res) => {
+router.put("/request/deny", rejectUnauthenticated, (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
 
