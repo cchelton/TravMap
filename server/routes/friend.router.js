@@ -196,4 +196,27 @@ router.put("/toggleDisplay/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// delete a friend
+router.delete("/delete", (req, res) => {
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
+
+  const queryData = [userID, friendID];
+  const queryText = `DELETE FROM "user_relationship"
+  WHERE ("user_id" = $1 AND "friend_id" = $2) OR ("user_id" = $2 AND "friend_id" = $1);`;
+
+  pool
+    .query(queryText, queryData)
+    .then((response) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(`Deny Friend Request Error:`);
+      console.log(err);
+      console.log(`queryText:`, queryText);
+
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
