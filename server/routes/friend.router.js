@@ -27,8 +27,8 @@ router.get("/:userID", rejectUnauthenticated, (req, res) => {
 });
 
 // make friend request
-// cole please learn pg-promise. it will make your life easier
-router.post("/add", rejectUnauthenticated, (req, res) => {
+// cole please learn how to use pg-promise. it will make your life easier
+router.post("/add", (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
 
@@ -171,6 +171,30 @@ router.put("/request/deny", rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log(`Deny Friend Request Error:`);
+      console.log(err);
+      console.log(`queryText:`, queryText);
+
+      res.sendStatus(500);
+    });
+});
+
+// cancel outgoing friend request
+router.put("/request/cancel", rejectUnauthenticated, (req, res) => {
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
+
+  const queryData = [userID, friendID];
+  const queryText = `DELETE FROM "user_relationship"
+  WHERE "user_id" = $1 AND "friend_id" $2;`;
+
+  // delete the outgoing friend request.
+  pool
+    .query(queryText, queryData)
+    .then((response) => {
+      res.sendStatus(200); // DONE! send OK
+    })
+    .catch((err) => {
+      console.log(`Cancel Friend Request Error:`);
       console.log(err);
       console.log(`queryText:`, queryText);
 
