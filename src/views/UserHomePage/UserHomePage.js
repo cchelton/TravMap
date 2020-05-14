@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 import TheMap from "../../components/TheMap/TheMap";
 import { makeStyles } from "@material-ui/core";
 
@@ -10,8 +12,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserHomePage() {
+function UserHomePage(props) {
   const classes = useStyles();
+  useEffect(() => {
+    const userID = props.store.user.id;
+    props.dispatch({
+      type: "GET_IMAGES",
+      payload: userID,
+    });
+  }, [props.match.params.userID]);
   return (
     <div className={classes.theMapContainer}>
       <TheMap mapWidth={700} mapHeight={500} />
@@ -19,4 +28,4 @@ function UserHomePage() {
   );
 }
 
-export default UserHomePage;
+export default connect(mapStoreToProps)(UserHomePage);

@@ -111,7 +111,7 @@ class RegisterPage extends Component {
         <center>
           <Button
             variant="outlined"
-            color="link"
+            color="primary"
             type="button"
             className="link-button"
             onClick={() => {

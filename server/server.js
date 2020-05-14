@@ -10,6 +10,7 @@ const passport = require("./strategies/user.strategy");
 // Route includes
 const userRouter = require("./routes/user.router");
 const imageRouter = require("./routes/image.router");
+const friendRouter = require("./routes/friend.router");
 const moderationRouter = require("./routes/moderation.router");
 const uploaderS3Router = require("react-s3-uploader/s3router");
 
@@ -27,6 +28,7 @@ app.use(passport.session());
 /* Routes */
 app.use("/api/user", userRouter);
 app.use("/api/image", imageRouter);
+app.use("/api/friend", friendRouter);
 app.use("/api/moderation", moderationRouter);
 app.use(
   "/s3",

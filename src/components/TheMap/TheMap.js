@@ -36,7 +36,11 @@ function TheMap(props) {
   const classes = useStyles();
   return (
     <div id="mapDiv" className={classes.container}>
-      <TheMapReactMap mapWidth={props.mapWidth} mapHeight={props.mapHeight} />
+      <TheMapReactMap
+        mapWidth={props.mapWidth}
+        mapHeight={props.mapHeight}
+        customDisplayID={props.customDisplayID ? props.customDisplayID : null} // send a customDisplayID if it exists
+      />
       <IconButton className={classes.addBtn} onClick={handleOpen}>
         <AddCircleIcon />
       </IconButton>

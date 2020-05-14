@@ -51,4 +51,45 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
+// get necessary user data for profile pages
+router.get("/focus", rejectUnauthenticated, (req, res) => {
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
+
+  if (friendID !== userID) {
+    // run this query if the user isn't on their own page
+    const queryData = [userID, friendID];
+    // const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+    // FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+    // WHERE "user"."id" = $1 AND ("user_relationship"."friend_id" = $2 OR "confirmed_request" = FALSE OR "user_relationship"."friend_id" IS NULL);
+    // `;
+    const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+    FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+    WHERE ("user_id" = $1 AND "friend_id" = $2)
+    UNION ALL
+    SELECT "username", "first_name", "last_name", "moderator", NULL as "confirmed_request" FROM "user"
+    WHERE "user"."id" = $2;
+    `;
+    pool
+      .query(queryText, queryData)
+      .then((response) => {
+        res.send(response.rows);
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+      });
+  } else {
+    // run this one if they are
+    const queryText = `SELECT "username", "first_name", "last_name", "moderator" FROM "user" WHERE "id" = $1;`;
+    pool
+      .query(queryText, [userID])
+      .then((response) => {
+        res.send(response.rows);
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+      });
+  }
+});
+
 module.exports = router;

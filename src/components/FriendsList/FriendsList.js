@@ -1,70 +1,28 @@
-import React from "react";
-import { withStyles, Menu, MenuItem } from "@material-ui/core";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
+import ExpandedFriendsList from "./ExpandedFriendsList";
 
-const StyledMenu = withStyles({
-  paper: {
-    border: "1px solid #d3d4d5",
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    transformOrigin={{
-      vertical: "bottom",
-      horizontal: "right",
-    }}
-    {...props}
-  />
-));
+class FriendsList extends Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: "GET_FRIENDS",
+      payload: this.props.user.id,
+    });
+    this.props.dispatch({
+      type: "GET_FRIEND_REQUESTS",
+      payload: this.props.user.id,
+    });
+  }
 
-const testFriends = ["john", "taco", "charlie", "toast"];
-
-/**
- * Expandable Friends List Menu.
- * Open state managed by parent component.
- *
- * state line for parent:
- * const [anchorEl, setAnchorEl] = React.useState(null);
- *
- * event handler to open:
- * const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
- *
- * event handler to close:
- * const handleClose = () => {
-    setAnchorEl(null);
-  };
- */
-function FriendsList(props) {
-  const anchorEl = props.anchorEl;
-  const handleClose = props.handleClose;
-
-  const friendElements = testFriends.map((item, index) => (
-    <MenuItem key={index}>
-      <p>{item}</p>
-    </MenuItem>
-  ));
-  return (
-    <StyledMenu
-      id="customized-menu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-    >
-      <MenuItem onClick={handleClose}>
-        <h5>Friends</h5>
-      </MenuItem>
-      <MenuItem>
-        <input placeholder="search" readOnly />
-      </MenuItem>
-      {friendElements}
-    </StyledMenu>
-  );
+  render() {
+    return (
+      <ExpandedFriendsList
+        anchorEl={this.props.anchorEl}
+        handleClose={this.props.handleClose}
+      />
+    );
+  }
 }
 
-export default FriendsList;
+export default connect(mapStoreToProps)(FriendsList);
