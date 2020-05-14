@@ -179,13 +179,13 @@ router.put("/request/deny", rejectUnauthenticated, (req, res) => {
 });
 
 // cancel outgoing friend request
-router.put("/request/cancel", rejectUnauthenticated, (req, res) => {
+router.delete("/request/cancel", rejectUnauthenticated, (req, res) => {
   const userID = req.query.userID;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
   const queryText = `DELETE FROM "user_relationship"
-  WHERE "user_id" = $1 AND "friend_id" $2;`;
+  WHERE "user_id" = $1 AND "friend_id" = $2;`;
 
   // delete the outgoing friend request.
   pool

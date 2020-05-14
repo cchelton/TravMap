@@ -56,9 +56,114 @@ function* toggleFriendPhotoDisplay(action) {
   }
 }
 
+/**
+ * Create a friend request.
+ */
+function* createFriendRequest(action) {
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
+
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+    params: {
+      userID: userID,
+      friendID: friendID,
+    },
+  };
+
+  yield axios.post(`/api/friend/add`, null, config);
+  yield put({ type: "GET_FRIENDS", payload: userID });
+}
+
+/**
+ * Cancel a friend request.
+ */
+function* cancelFriendRequest(action) {
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
+
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+    params: {
+      userID: userID,
+      friendID: friendID,
+    },
+  };
+
+  yield axios.delete(`/api/friend/request/cancel`, config);
+  yield put({ type: "GET_FRIENDS", payload: userID });
+}
+
+/**
+ * Accept an incoming friend request.
+ */
+function* acceptFriendRequest(action) {
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
+
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+    params: {
+      userID: userID,
+      friendID: friendID,
+    },
+  };
+
+  yield axios.put(`/api/friend/request/accept`, config);
+  yield put({ type: `GET_FRIENDS`, payload: userID });
+}
+
+/**
+ * Deny an incoming friend request.
+ */
+function* denyFriendRequest(action) {
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
+
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+    params: {
+      userID: userID,
+      friendID: friendID,
+    },
+  };
+
+  yield axios.put(`/api/friend/request/deny`, config);
+  yield put({ type: `GET_FRIENDS`, payload: userID });
+}
+
+/**
+ * Delete a friend.
+ */
+function* deleteFriend(action) {
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
+
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+    params: {
+      userID: userID,
+      friendID: friendID,
+    },
+  };
+
+  yield axios.delete(`/api/friend/delete`, config);
+  yield put({ type: `GET_FRIENDS`, payload: userID });
+}
+
 function* friendSaga() {
   yield takeLatest("GET_FRIENDS", getFriends);
   yield takeLatest("TOGGLE_FRIEND_PHOTO_DISPLAY", toggleFriendPhotoDisplay);
+  yield takeLatest("CREATE_FRIEND_REQUEST", createFriendRequest);
+  yield takeLatest("CANCEL_FRIEND_REQUEST", cancelFriendRequest);
+  yield takeLatest("ACCEPT_FRIEND_REQUEST", acceptFriendRequest);
+  yield takeLatest("DENY_FRIEND_REQUEST", denyFriendRequest);
+  yield takeLatest("DELETE_FRIEND", deleteFriend);
 }
 
 export default friendSaga;

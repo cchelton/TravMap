@@ -59,9 +59,17 @@ router.get("/focus", rejectUnauthenticated, (req, res) => {
   if (userPageID !== currentUserID) {
     // run this query if the user isn't on their own page
     const queryData = [userPageID, currentUserID];
-    const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user"
-  FULL JOIN "user_relationship" ON "user"."id" = "user_relationship"."user_id"
-  WHERE "user"."id" = $1 AND ("user_relationship"."friend_id" = $2 OR "user_relationship"."friend_id" IS NULL);`;
+    // const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+    // FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+    // WHERE "user"."id" = $1 AND ("user_relationship"."friend_id" = $2 OR "confirmed_request" = FALSE OR "user_relationship"."friend_id" IS NULL);
+    // `;
+    const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+    FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+    WHERE ("user_id" = $2 AND "friend_id" = $1)
+    UNION ALL
+    SELECT "username", "first_name", "last_name", "moderator", NULL as "confirmed_request" FROM "user"
+    WHERE "user"."id" = $1;
+    `;
     pool
       .query(queryText, queryData)
       .then((response) => {

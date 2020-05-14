@@ -43,7 +43,11 @@ function UserProfilePage(props) {
             </Typography>
           )}
           {userPageID !== currentUserID && (
-            <AddFriendButton confirmed_request={confirmed_request} />
+            <AddFriendButton
+              confirmed_request={confirmed_request}
+              userID={currentUserID}
+              friendID={userPageID}
+            />
           )}
         </div>
         <div>
