@@ -53,22 +53,22 @@ router.post("/logout", (req, res) => {
 
 // get necessary user data for profile pages
 router.get("/focus", rejectUnauthenticated, (req, res) => {
-  const userPageID = req.query.userPageID;
-  const currentUserID = req.query.currentUserID;
+  const userID = req.query.userID;
+  const friendID = req.query.friendID;
 
-  if (userPageID !== currentUserID) {
+  if (friendID !== userID) {
     // run this query if the user isn't on their own page
-    const queryData = [userPageID, currentUserID];
+    const queryData = [userID, friendID];
     // const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
     // FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
     // WHERE "user"."id" = $1 AND ("user_relationship"."friend_id" = $2 OR "confirmed_request" = FALSE OR "user_relationship"."friend_id" IS NULL);
     // `;
     const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
     FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
-    WHERE ("user_id" = $2 AND "friend_id" = $1)
+    WHERE ("user_id" = $1 AND "friend_id" = $2)
     UNION ALL
     SELECT "username", "first_name", "last_name", "moderator", NULL as "confirmed_request" FROM "user"
-    WHERE "user"."id" = $1;
+    WHERE "user"."id" = $2;
     `;
     pool
       .query(queryText, queryData)
@@ -82,7 +82,7 @@ router.get("/focus", rejectUnauthenticated, (req, res) => {
     // run this one if they are
     const queryText = `SELECT "username", "first_name", "last_name", "moderator" FROM "user" WHERE "id" = $1;`;
     pool
-      .query(queryText, [currentUserID])
+      .query(queryText, [userID])
       .then((response) => {
         res.send(response.rows);
       })

@@ -9,7 +9,10 @@ import {
   Typography,
   TextField,
   Checkbox,
+  IconButton,
 } from "@material-ui/core";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
 const StyledMenu = withStyles({
   paper: {
@@ -74,6 +77,34 @@ class FriendsList extends Component {
     this.props.history.push(`/user/${friendID}`);
   };
 
+  // accept a request
+  handleAcceptClick = (friendID) => (event) => {
+    event.stopPropagation();
+    const userID = this.props.store.user.id;
+
+    this.props.dispatch({
+      type: "CONFIRM_FRIEND_REQUEST",
+      payload: {
+        userID,
+        friendID,
+      },
+    });
+  };
+
+  // deny a request
+  handleDenyClick = (friendID) => (event) => {
+    event.stopPropagation();
+    const userID = this.props.store.user.id;
+
+    this.props.dispatch({
+      type: "DENY_FRIEND_REQUEST",
+      payload: {
+        userID,
+        friendID,
+      },
+    });
+  };
+
   render() {
     const anchorEl = this.props.anchorEl;
     const handleClose = this.props.handleClose;
@@ -87,6 +118,26 @@ class FriendsList extends Component {
         <Typography variant="body1" component="p">
           {friend.friend_name}
         </Typography>
+      </MenuItem>
+    ));
+
+    const requestElements = this.props.store.request.map((person, index) => (
+      <MenuItem key={index} onClick={this.handleFriendClick(person.friend_id)}>
+        <IconButton
+          color="primary"
+          onClickCapture={this.handleAcceptClick(person.friend_id)}
+        >
+          <AddCircleOutlineOutlinedIcon />
+        </IconButton>
+        <Typography variant="body1" component="p">
+          {person.friend_name}
+        </Typography>
+        <IconButton
+          color="primary"
+          onClickCapture={this.handleDenyClick(person.friend_id)}
+        >
+          <DeleteForeverOutlinedIcon />
+        </IconButton>
       </MenuItem>
     ));
     return (
@@ -106,6 +157,14 @@ class FriendsList extends Component {
           <TextField margin="dense" placeholder="search" disabled />
         </MenuItem>
         {friendElements}
+        {requestElements.length !== 0 && (
+          <MenuItem>
+            <Typography variant="subtitle1" component="p">
+              Requests
+            </Typography>
+          </MenuItem>
+        )}
+        {requestElements}
       </StyledMenu>
     );
   }

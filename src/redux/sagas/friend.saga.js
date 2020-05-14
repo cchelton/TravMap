@@ -74,6 +74,8 @@ function* createFriendRequest(action) {
 
   yield axios.post(`/api/friend/add`, null, config);
   yield put({ type: "GET_FRIENDS", payload: userID });
+  yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
+  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
 }
 
 /**
@@ -94,12 +96,14 @@ function* cancelFriendRequest(action) {
 
   yield axios.delete(`/api/friend/request/cancel`, config);
   yield put({ type: "GET_FRIENDS", payload: userID });
+  yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
+  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
 }
 
 /**
- * Accept an incoming friend request.
+ * Confirm an incoming friend request.
  */
-function* acceptFriendRequest(action) {
+function* confirmFriendRequest(action) {
   const userID = action.payload.userID;
   const friendID = action.payload.friendID;
 
@@ -112,8 +116,9 @@ function* acceptFriendRequest(action) {
     },
   };
 
-  yield axios.put(`/api/friend/request/accept`, config);
+  yield axios.put(`/api/friend/request/confirm`, null, config);
   yield put({ type: `GET_FRIENDS`, payload: userID });
+  yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
 }
 
 /**
@@ -132,8 +137,9 @@ function* denyFriendRequest(action) {
     },
   };
 
-  yield axios.put(`/api/friend/request/deny`, config);
+  yield axios.put(`/api/friend/request/deny`, null, config);
   yield put({ type: `GET_FRIENDS`, payload: userID });
+  yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
 }
 
 /**
@@ -154,6 +160,8 @@ function* deleteFriend(action) {
 
   yield axios.delete(`/api/friend/delete`, config);
   yield put({ type: `GET_FRIENDS`, payload: userID });
+  yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
+  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
 }
 
 /**
@@ -175,7 +183,7 @@ function* friendSaga() {
   yield takeLatest("TOGGLE_FRIEND_PHOTO_DISPLAY", toggleFriendPhotoDisplay);
   yield takeLatest("CREATE_FRIEND_REQUEST", createFriendRequest);
   yield takeLatest("CANCEL_FRIEND_REQUEST", cancelFriendRequest);
-  yield takeLatest("ACCEPT_FRIEND_REQUEST", acceptFriendRequest);
+  yield takeLatest("CONFIRM_FRIEND_REQUEST", confirmFriendRequest);
   yield takeLatest("DENY_FRIEND_REQUEST", denyFriendRequest);
   yield takeLatest("DELETE_FRIEND", deleteFriend);
   yield takeLatest("GET_FRIEND_REQUESTS", getFriendRequests);

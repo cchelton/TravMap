@@ -25,17 +25,17 @@ function* fetchUser() {
 }
 
 function* focusUser(action) {
-  const userPageID = action.payload.userPageID;
-  const currentUserID = action.payload.currentUserID;
+  const userID = action.payload.userID;
+  const friendID = action.payload.friendID;
   const config = {
     headers: { "Content-Type": "application/json" },
-    params: { userPageID, currentUserID },
+    params: { friendID, userID },
     withCredentials: true,
   };
 
   const response = yield axios.get(`/api/user/focus/`, config);
   yield put({ type: "SET_FOCUSED_USER", payload: response.data[0] }); //  there is only one user, get it from index[0]
-  yield put({ type: "GET_FOCUSED_USER_IMAGES", payload: userPageID });
+  yield put({ type: "GET_FOCUSED_USER_IMAGES", payload: friendID });
 }
 
 function* userSaga() {

@@ -8,8 +8,8 @@ import { Typography } from "@material-ui/core";
 import SecurityIcon from "@material-ui/icons/Security";
 
 function UserProfilePage(props) {
-  const userPageID = Number(props.match.params.userID); //  comes as string. React doesn't like != so this needs to be num for comparison.
-  const currentUserID = props.store.user.id;
+  const friendID = Number(props.match.params.userID); //  comes as string. React doesn't like != so this needs to be num for comparison.
+  const userID = props.store.user.id;
   const {
     username,
     first_name,
@@ -21,8 +21,8 @@ function UserProfilePage(props) {
     props.dispatch({
       type: "FOCUS_USER",
       payload: {
-        userPageID,
-        currentUserID,
+        friendID,
+        userID,
       },
     });
   }, [props.match.params.userID]); // refocus whenever the page changes. This fixes the issue that navigating from friends list wouldn't update page info.
@@ -42,16 +42,16 @@ function UserProfilePage(props) {
               Moderator
             </Typography>
           )}
-          {userPageID !== currentUserID && (
+          {friendID !== userID && (
             <AddFriendButton
               confirmed_request={confirmed_request}
-              userID={currentUserID}
-              friendID={userPageID}
+              userID={userID}
+              friendID={friendID}
             />
           )}
         </div>
         <div>
-          <TheMap mapWidth={700} mapHeight={500} customDisplayID={userPageID} />
+          <TheMap mapWidth={700} mapHeight={500} customDisplayID={friendID} />
         </div>
       </div>
     );
