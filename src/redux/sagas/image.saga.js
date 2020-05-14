@@ -79,10 +79,29 @@ function* postImage(action) {
   }
 }
 
+/**
+ * Delete an image.
+ */
+function* deleteImage(action) {
+  try {
+    const imageID = action.payload.imageID;
+    const displayIDs = action.payload.displayIDs;
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    yield axios.delete(`/api/image/delete/${imageID}`, config);
+    yield put({ type: "GET_IMAGES", payload: displayIDs }); //  refresh images after delete
+  } catch (err) {
+    console.log("Image delete request failed", err);
+  }
+}
+
 function* imageSaga() {
   yield takeLatest("POST_IMAGE", postImage);
   yield takeLatest("GET_IMAGES", getImages);
   yield takeLatest("GET_FOCUSED_USER_IMAGES", getFocusedUserImages);
+  yield takeLatest("DELETE_IMAGE", deleteImage);
 }
 
 export default imageSaga;
