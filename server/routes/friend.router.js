@@ -9,7 +9,7 @@ const {
 
 // gets a user's friends list
 router.get("/:userID", rejectUnauthenticated, (req, res) => {
-  const userID = req.params.userID;
+  const userID = req.user.id;
   const queryText = `SELECT "user_relationship"."user_id" as "friend_id", "user"."username" as "friend_name", "display_user_photos_on_friend_map" as "display_photos" FROM "user_relationship"
   JOIN "user" on "user"."id" = "user_relationship"."user_id"
   WHERE ("user_relationship"."friend_id" = $1 AND "user_relationship"."confirmed_request")
@@ -28,7 +28,7 @@ router.get("/:userID", rejectUnauthenticated, (req, res) => {
 
 // get a user's incoming friend requests
 router.get("/requests/:userID", rejectUnauthenticated, (req, res) => {
-  const userID = req.params.userID;
+  const userID = req.user.id;
   const queryText = `SELECT "user_relationship"."user_id" as "friend_id", "user"."username" as "friend_name", "display_user_photos_on_friend_map" as "display_photos" FROM "user_relationship"
   JOIN "user" on "user"."id" = "user_relationship"."user_id"
   WHERE ("user_relationship"."friend_id" = $1 AND NOT "user_relationship"."confirmed_request")
@@ -48,7 +48,7 @@ router.get("/requests/:userID", rejectUnauthenticated, (req, res) => {
 // make friend request
 // cole please learn how to use pg-promise. it will make your life easier
 router.post("/add", (req, res) => {
-  const userID = req.query.userID;
+  const userID = req.user.id;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
@@ -130,7 +130,7 @@ router.post("/add", (req, res) => {
 
 // confirms incoming friend request
 router.put("/request/confirm", rejectUnauthenticated, (req, res) => {
-  const userID = req.query.userID;
+  const userID = req.user.id;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
@@ -173,7 +173,7 @@ router.put("/request/confirm", rejectUnauthenticated, (req, res) => {
 
 // deny incoming friend request
 router.put("/request/deny", rejectUnauthenticated, (req, res) => {
-  const userID = req.query.userID;
+  const userID = req.user.id;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
@@ -199,7 +199,7 @@ router.put("/request/deny", rejectUnauthenticated, (req, res) => {
 
 // cancel outgoing friend request
 router.delete("/request/cancel", rejectUnauthenticated, (req, res) => {
-  const userID = req.query.userID;
+  const userID = req.user.id;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
@@ -241,7 +241,7 @@ router.put("/toggleDisplay/:id", rejectUnauthenticated, (req, res) => {
 
 // delete a friend
 router.delete("/delete", (req, res) => {
-  const userID = req.query.userID;
+  const userID = req.user.id;
   const friendID = req.query.friendID;
 
   const queryData = [userID, friendID];
