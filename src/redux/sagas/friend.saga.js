@@ -67,15 +67,15 @@ function* createFriendRequest(action) {
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
     params: {
-      userID: userID,
-      friendID: friendID,
+      userID,
+      friendID,
     },
   };
 
   yield axios.post(`/api/friend/add`, null, config);
   yield put({ type: "GET_FRIENDS", payload: userID });
   yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
-  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
+  yield put({ type: "FOCUS_USER", payload: { userID, friendID } }); //  this occurs on user profile page, refocus that user
 }
 
 /**
@@ -89,15 +89,15 @@ function* cancelFriendRequest(action) {
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
     params: {
-      userID: userID,
-      friendID: friendID,
+      userID,
+      friendID,
     },
   };
 
   yield axios.delete(`/api/friend/request/cancel`, config);
   yield put({ type: "GET_FRIENDS", payload: userID });
   yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
-  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
+  yield put({ type: "FOCUS_USER", payload: { userID, friendID } }); //  this occurs on user profile page, refocus that user
 }
 
 /**
@@ -161,7 +161,7 @@ function* deleteFriend(action) {
   yield axios.delete(`/api/friend/delete`, config);
   yield put({ type: `GET_FRIENDS`, payload: userID });
   yield put({ type: "GET_FRIEND_REQUESTS", payload: userID });
-  yield put({ type: "FOCUS_USER", payload: [userID, friendID] }); //  this occurs on user profile page, refocus that user
+  yield put({ type: "FOCUS_USER", payload: { userID, friendID } }); //  this occurs on user profile page, refocus that user
 }
 
 /**
