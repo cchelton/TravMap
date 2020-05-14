@@ -26,6 +26,25 @@ router.get("/:userID", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// get a user's incoming friend requests
+router.get("/requests/:userID", rejectUnauthenticated, (req, res) => {
+  const userID = req.params.userID;
+  const queryText = `SELECT "user_relationship"."user_id" as "friend_id", "user"."username" as "friend_name", "display_user_photos_on_friend_map" as "display_photos" FROM "user_relationship"
+  JOIN "user" on "user"."id" = "user_relationship"."user_id"
+  WHERE ("user_relationship"."friend_id" = $1 AND NOT "user_relationship"."confirmed_request")
+  ORDER BY "friend_name" ASC;`;
+
+  pool
+    .query(queryText, [userID])
+    .then((response) => {
+      res.send(response.rows);
+    })
+    .catch((err) => {
+      console.log("err getting friend requests:", err);
+      res.sendStatus(500);
+    });
+});
+
 // make friend request
 // cole please learn how to use pg-promise. it will make your life easier
 router.post("/add", (req, res) => {

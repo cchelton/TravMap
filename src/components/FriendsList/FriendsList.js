@@ -9,6 +9,10 @@ class FriendsList extends Component {
       type: "GET_FRIENDS",
       payload: this.props.user.id,
     });
+    this.props.dispatch({
+      type: "GET_FRIEND_REQUESTS",
+      payload: this.props.user.id,
+    });
   }
 
   render() {

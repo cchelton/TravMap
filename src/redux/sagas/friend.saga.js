@@ -156,6 +156,20 @@ function* deleteFriend(action) {
   yield put({ type: `GET_FRIENDS`, payload: userID });
 }
 
+/**
+ * Get a user's incoming friend requests.
+ */
+function* getFriendRequests(action) {
+  const userID = action.payload;
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  };
+
+  const response = yield axios.get(`/api/friend/requests/${userID}`, config);
+  yield put({ type: "SET_FRIEND_REQUESTS", payload: response.data });
+}
+
 function* friendSaga() {
   yield takeLatest("GET_FRIENDS", getFriends);
   yield takeLatest("TOGGLE_FRIEND_PHOTO_DISPLAY", toggleFriendPhotoDisplay);
@@ -164,6 +178,7 @@ function* friendSaga() {
   yield takeLatest("ACCEPT_FRIEND_REQUEST", acceptFriendRequest);
   yield takeLatest("DENY_FRIEND_REQUEST", denyFriendRequest);
   yield takeLatest("DELETE_FRIEND", deleteFriend);
+  yield takeLatest("GET_FRIEND_REQUESTS", getFriendRequests);
 }
 
 export default friendSaga;
