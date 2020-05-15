@@ -28,9 +28,17 @@ function* reviewImage(action) {
   yield put({ type: "MOD_GET_IMAGES" });
 }
 
+function* deleteImage(action) {
+  const imageID = action.payload;
+
+  yield axios.delete(`/api/image/delete/${imageID}`);
+  yield put({ type: "MOD_GET_IMAGES" });
+}
+
 function* moderationSaga() {
   yield takeLatest("MOD_REVIEW_IMAGE", reviewImage);
   yield takeLatest("MOD_GET_IMAGES", getAllImages);
+  yield takeLatest("MOD_DELETE_IMAGE", deleteImage);
 }
 
 export default moderationSaga;

@@ -97,10 +97,6 @@ router.delete("/delete/:imageID", rejectUnauthenticated, (req, res) => {
   const userID = req.user.id;
   const moderatorStatus = req.user.moderator;
   const imageID = req.params.imageID;
-  console.log(`imageID`);
-  console.log(imageID);
-  console.log(`user`);
-  console.log(user);
   let owner_id = null;
 
   // first get the image owner id
