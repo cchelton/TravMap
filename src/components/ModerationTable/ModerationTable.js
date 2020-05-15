@@ -12,6 +12,10 @@ import {
   IconButton,
   Checkbox,
   withStyles,
+  Card,
+  CardMedia,
+  Popover,
+  CardActionArea,
 } from "@material-ui/core";
 import DeleteSharpIcon from "@material-ui/icons/DeleteSharp";
 import FlagSharpIcon from "@material-ui/icons/FlagSharp";
@@ -27,9 +31,19 @@ const useStyles = (theme) => ({
     display: "flex",
     alignItems: "center",
   },
+  popover: {
+    minWidth: "80vw",
+    maxHeight: "80vh",
+    maxWidth: "80vw",
+  },
 });
 
 class ModerationTable extends Component {
+  state = {
+    anchorEl: null,
+    popoverID: null,
+  };
+
   componentDidMount() {
     this.props.dispatch({
       type: "MOD_GET_IMAGES",
@@ -50,24 +64,97 @@ class ModerationTable extends Component {
     });
   };
 
+  handlePopoverOpen = (anchorElID, reviewID) => (event) => {
+    const element = document.getElementById(anchorElID);
+    this.setState({
+      anchorEl: element,
+      popoverID: reviewID,
+    });
+  };
+
+  handlePopoverClose = (event) => {
+    this.setState({
+      anchorEl: null,
+    });
+  };
+
   render() {
+    const tableID = "ModerationTable";
     const { classes } = this.props;
     const tableRowElements = this.props.store.moderation.map((item, index) => (
       <TableRow key={index}>
-        <TableCell scope="row">{item.img_id}</TableCell>
+        <TableCell scope="row">
+          <Typography variant="body2" component="p">
+            {item.img_id}
+          </Typography>
+        </TableCell>
+
         <TableCell scope="row">
           <div className={classes.row}>
-            <img
-              className={classes.image}
-              src={item.img_url}
-              alt={item.title}
-            />
+            <Card>
+              <CardActionArea
+                onClick={this.handlePopoverOpen(tableID, item.img_id)}
+              >
+                <CardMedia
+                  className={classes.image}
+                  component="img"
+                  image={item.img_url}
+                  alt={item.title}
+                />
+              </CardActionArea>
+            </Card>
+            <Popover
+              className={classes.popover}
+              open={
+                Boolean(this.state.anchorEl) && //  this determines open/close
+                this.state.popoverID === item.img_id // this determines which row's popover to bring up
+              }
+              anchorEl={this.state.anchorEl}
+              onClose={this.handlePopoverClose}
+              anchorOrigin={{
+                vertical: "center",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "center",
+                horizontal: "center",
+              }}
+            >
+              <Card>
+                <CardMedia
+                  component="img"
+                  image={item.img_url}
+                  alt={item.title}
+                />
+              </Card>
+            </Popover>
           </div>
         </TableCell>
-        <TableCell scope="row">{item.title}</TableCell>
-        <TableCell scope="row">{item.notes}</TableCell>
-        <TableCell scope="row">{item.owner_id}</TableCell>
-        <TableCell scope="row">{item.username}</TableCell>
+
+        <TableCell scope="row">
+          <Typography variant="body2" component="p">
+            {item.title}
+          </Typography>
+        </TableCell>
+
+        <TableCell scope="row">
+          <Typography variant="body2" component="p">
+            {item.notes}
+          </Typography>
+        </TableCell>
+
+        <TableCell scope="row">
+          <Typography variant="body2" component="p">
+            {item.owner_id}
+          </Typography>
+        </TableCell>
+
+        <TableCell scope="row">
+          <Typography variant="body2" component="p">
+            {item.username}
+          </Typography>
+        </TableCell>
+
         <TableCell scope="row">
           <Checkbox
             checked={item.reviewed}
@@ -77,6 +164,7 @@ class ModerationTable extends Component {
             color="primary"
           />
         </TableCell>
+
         <TableCell scope="row">
           {item.reviewed ? null : (
             <IconButton
@@ -90,7 +178,7 @@ class ModerationTable extends Component {
       </TableRow>
     ));
     return (
-      <TableContainer>
+      <TableContainer id={tableID}>
         <Table>
           <TableHead>
             <TableRow>
