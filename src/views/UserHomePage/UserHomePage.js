@@ -22,9 +22,10 @@ function UserHomePage(props) {
   const classes = useStyles();
   useEffect(() => {
     const userID = props.store.user.id;
+    const displayIDs = props.store.displayIDs;
     props.dispatch({
-      type: "GET_FRIENDS",
-      payload: userID,
+      type: "GET_IMAGES",
+      payload: [userID, ...displayIDs],
     });
   }, [props.match.params.userID]);
   return (
