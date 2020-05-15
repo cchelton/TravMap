@@ -17,17 +17,18 @@ class TheMapReactMap extends Component {
 
   render() {
     const useCustomID = this.props.customDisplayID ? true : false; // which display mode to use? User's Home Map or single user map
+    const userID = this.props.store.user.id; // used to show/hide delete image button. deletion is secured server-side so no worries if another user clicks delete. Hide for design.
 
     let MarkerElements = [];
     if (useCustomID) {
       MarkerElements = this.props.store.focusedUserImage.map((image, index) => (
-        <ImageMarker image={image} key={index}>
+        <ImageMarker image={image} key={index} userID={userID}>
           <img src={image.img_url} alt={image.title} />
         </ImageMarker>
       ));
     } else {
       MarkerElements = this.props.store.image.map((image, index) => (
-        <ImageMarker image={image} key={index}>
+        <ImageMarker image={image} key={index} userID={userID}>
           <img src={image.img_url} alt={image.title} />
         </ImageMarker>
       ));
