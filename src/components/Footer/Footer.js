@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   friendsList: {
     padding: "5px 24px",
     display: "inline-block",
-    borderLeft: "solid rgba(0, 0, 0, 0.54) 1px",
+    borderLeft: `solid ${theme.palette.primary.contrastText} 1px`,
   },
 }));
 

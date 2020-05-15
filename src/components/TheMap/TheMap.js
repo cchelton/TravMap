@@ -41,8 +41,12 @@ function TheMap(props) {
         mapHeight={props.mapHeight}
         customDisplayID={props.customDisplayID ? props.customDisplayID : null} // send a customDisplayID if it exists
       />
-      <IconButton className={classes.addBtn} onClick={handleOpen}>
-        <AddCircleIcon />
+      <IconButton
+        color="secondary"
+        className={classes.addBtn}
+        onClick={handleOpen}
+      >
+        <AddCircleIcon fontSize="large" />
       </IconButton>
       <DropZone anchorEl={anchorEl} handleClose={handleClose} />
     </div>

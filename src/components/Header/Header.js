@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  whiteBtn: {
+    color: theme.palette.primary.contrastText,
+  },
 }));
 
 function Header(props) {
@@ -75,14 +78,20 @@ function Header(props) {
             <div>
               {/* only show the moderator button to moderators. Keep users away if possible. */}
               {props.user.moderator && (
-                <IconButton onClick={handleClick("/moderation")}>
+                <IconButton
+                  className={classes.whiteBtn}
+                  onClick={handleClick("/moderation")}
+                >
                   <SecurityIcon />
                 </IconButton>
               )}
-              <IconButton onClick={handleClick("/home")}>
+              <IconButton
+                className={classes.whiteBtn}
+                onClick={handleClick("/home")}
+              >
                 <MapIcon />
               </IconButton>
-              <IconButton onClick={handleOpen}>
+              <IconButton className={classes.whiteBtn} onClick={handleOpen}>
                 <AccountCircleIcon />
               </IconButton>
               <StyledMenu
