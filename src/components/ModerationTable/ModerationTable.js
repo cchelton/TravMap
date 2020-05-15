@@ -57,7 +57,7 @@ class ModerationTable extends Component {
     });
   };
 
-  handleReviewDelete = (imageID) => (event) => {
+  handleImageDelete = (imageID) => (event) => {
     this.props.dispatch({
       type: "MOD_DELETE_IMAGE",
       payload: imageID,
@@ -169,7 +169,7 @@ class ModerationTable extends Component {
           {item.reviewed ? null : (
             <IconButton
               color="secondary"
-              onClick={this.handleReviewDelete(item.img_id)}
+              onClick={this.handleImageDelete(item.img_id)}
             >
               <DeleteSharpIcon />
             </IconButton>
