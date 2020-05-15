@@ -51,17 +51,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
       });
   } else {
-    // if no ids were specified, get all the images
-    queryText = `SELECT * FROM "image" ORDER BY "id" ASC;`;
-
-    pool
-      .query(queryText)
-      .then((response) => {
-        res.send(response.rows);
-      })
-      .catch((err) => {
-        res.sendStatus(500);
-      });
+    // if no ids were specified, send bad request
+    res.sendStatus(400);
   }
 });
 
@@ -99,37 +90,52 @@ router.post("/add", rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * Toggles a photo's reviewed status.
- * Photo is selected by its "id".
- */
-router.put("/review/:imageID", rejectUnauthenticated, (req, res) => {
-  const imageID = req.params.imageID;
-  const queryText = `UPDATE "image" SET "reviewed" = (NOT "reviewed") WHERE id=$1;`;
-
-  pool
-    .query(queryText, [imageID])
-    .then((response) => {
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      res.sendStatus(500);
-    });
-});
-
-/**
  * Deletes a photo.
  * Photo is selected by its "id".
  */
 router.delete("/delete/:imageID", rejectUnauthenticated, (req, res) => {
+  const userID = req.user.id;
+  const moderatorStatus = req.user.moderator;
   const imageID = req.params.imageID;
-  const queryText = `DELETE FROM "image" WHERE id = $1;`;
+  let owner_id = null;
 
+  // first get the image owner id
+  let queryText = `SELECT "owner_id" FROM "image" WHERE "id" = $1;`;
   pool
     .query(queryText, [imageID])
     .then((response) => {
-      res.sendStatus(200);
+      owner_id = response.rows[0].owner_id; // GET owner_id was successful
+      if (userID === owner_id) {
+        // the user owns the picture, allow them to delete
+        let queryText = `DELETE FROM "image" WHERE id = $1;`;
+
+        pool
+          .query(queryText, [imageID])
+          .then((response) => {
+            res.sendStatus(200);
+          })
+          .catch((err) => {
+            res.sendStatus(500);
+          });
+      } else if (moderatorStatus === "true") {
+        // the user is a moderator, allow them to delete
+        let queryText = `DELETE FROM "image" WHERE id = $1;`;
+
+        pool
+          .query(queryText, [imageID])
+          .then((response) => {
+            res.sendStatus(200);
+          })
+          .catch((err) => {
+            res.sendStatus(500);
+          });
+      } else {
+        // the user shouldn't delete this
+        res.sendStatus(403);
+      }
     })
     .catch((err) => {
+      console.log("Err getting image owner_id:", err);
       res.sendStatus(500);
     });
 });

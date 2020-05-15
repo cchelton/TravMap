@@ -17,6 +17,7 @@ function UserProfilePage(props) {
     confirmed_request,
     isModerator,
   } = props.store.focusedUser; //  get info from reducer
+
   useEffect(() => {
     props.dispatch({
       type: "FOCUS_USER",
