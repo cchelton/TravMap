@@ -67,13 +67,15 @@ function* getFocusedUserImages(action) {
                             }
  */
 function* postImage(action) {
+  const postData = action.payload.image;
+  const displayIDs = action.payload.displayIDs;
   try {
     const config = {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     };
-    yield axios.post("/api/image/add", action.payload, config);
-    yield put({ type: "GET_IMAGES" }); // I may need to put an id here if a user's map breaks on upload and displays all images.
+    yield axios.post("/api/image/add", postData, config);
+    yield put({ type: "GET_IMAGES", payload: displayIDs }); // I may need to put an id here if a user's map breaks on upload and displays all images.
   } catch (err) {
     console.log("Image post request failed", err);
   }

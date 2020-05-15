@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
   expandedImg: {
     maxWidth: "100vh",
-    maxHeight: "80vh",
+    maxHeight: "70vh",
   },
 });
 
@@ -104,7 +104,12 @@ function ImageMarker(props) {
         }}
       >
         <Card>
-          <CardMedia component="img" image={img_url} alt={title} />
+          <CardMedia
+            className={classes.expandedImg}
+            component="img"
+            image={img_url}
+            alt={title}
+          />
           <CardContent>
             <Typography variant="h6" component="h6">
               {title}

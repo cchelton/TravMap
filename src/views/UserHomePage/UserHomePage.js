@@ -35,6 +35,7 @@ function UserHomePage(props) {
           return (
             <div className={classes.theMapContainer}>
               <TheMap
+                showAddBtn
                 mapWidth={size.width}
                 mapHeight={722} // set as 722px for now
               />

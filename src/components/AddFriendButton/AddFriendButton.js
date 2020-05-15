@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  whiteText: {
+    color: theme.palette.primary.contrastText,
+  },
+}));
 
 function AddFriendButton(props) {
   const [tempMode, setTempMode] = useState(null);
   const userID = props.userID;
   const friendID = props.friendID;
+  const classes = useStyles();
 
   const handleClick = (mode) => (event) => {
     let type = "";
@@ -37,13 +44,23 @@ function AddFriendButton(props) {
   if (tempMode) {
     if (tempMode === "CANCEL") {
       return (
-        <Button color="default" onClick={handleClick("CANCEL")}>
+        <Button
+          className={classes.whiteText}
+          color="secondary"
+          variant="contained"
+          onClick={handleClick("CANCEL")}
+        >
           Cancel Request
         </Button>
       );
     } else if (tempMode === "ADD") {
       return (
-        <Button color="primary" onClick={handleClick("ADD")}>
+        <Button
+          className={classes.whiteText}
+          color="secondary"
+          variant="contained"
+          onClick={handleClick("ADD")}
+        >
           Add Friend
         </Button>
       );
@@ -53,19 +70,34 @@ function AddFriendButton(props) {
   } else {
     if (props.confirmed_request === true) {
       return (
-        <Button color="secondary" onClick={handleClick("REMOVE")}>
+        <Button
+          className={classes.whiteText}
+          color="secondary"
+          variant="contained"
+          onClick={handleClick("REMOVE")}
+        >
           Remove Friend
         </Button>
       );
     } else if (props.confirmed_request === false) {
       return (
-        <Button color="default" onClick={handleClick("CANCEL")}>
+        <Button
+          className={classes.whiteText}
+          color="secondary"
+          variant="contained"
+          onClick={handleClick("CANCEL")}
+        >
           Cancel Request
         </Button>
       );
     } else if (props.confirmed_request === null) {
       return (
-        <Button color="primary" onClick={handleClick("ADD")}>
+        <Button
+          className={classes.whiteText}
+          color="secondary"
+          variant="contained"
+          onClick={handleClick("ADD")}
+        >
           Add Friend
         </Button>
       );

@@ -8,7 +8,7 @@ import { Button } from "@material-ui/core";
  */
 function ImageDeleteButton(props) {
   const imageID = props.imageID;
-  const displayIDs = props.displayIDs;
+  const displayIDs = props.store.displayIDs;
   const handleClick = () => {
     props.dispatch({
       type: "DELETE_IMAGE",

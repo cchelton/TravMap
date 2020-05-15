@@ -1,0 +1,10 @@
+.rdsu-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rdsu-image > img {
+  max-height: 300px;
+  max-width: 400px;
+}

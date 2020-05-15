@@ -19,13 +19,16 @@ const useStyles = makeStyles((theme) => ({
     right: 10,
     bottom: 10,
   },
+  btnIcon: {
+    height: 45,
+    width: 45,
+  },
 }));
 
 function TheMap(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpen = (event) => {
-    console.log(event.currentTarget);
     setAnchorEl(document.getElementById("mapDiv"));
   };
 
@@ -41,13 +44,15 @@ function TheMap(props) {
         mapHeight={props.mapHeight}
         customDisplayID={props.customDisplayID ? props.customDisplayID : null} // send a customDisplayID if it exists
       />
-      <IconButton
-        color="secondary"
-        className={classes.addBtn}
-        onClick={handleOpen}
-      >
-        <AddCircleIcon fontSize="large" />
-      </IconButton>
+      {props.showAddBtn && (
+        <IconButton
+          color="secondary"
+          className={classes.addBtn}
+          onClick={handleOpen}
+        >
+          <AddCircleIcon className={classes.btnIcon} />
+        </IconButton>
+      )}
       <DropZone anchorEl={anchorEl} handleClose={handleClose} />
     </div>
   );
