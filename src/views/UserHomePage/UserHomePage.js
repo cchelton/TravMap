@@ -23,7 +23,7 @@ function UserHomePage(props) {
   useEffect(() => {
     const userID = props.store.user.id;
     props.dispatch({
-      type: "GET_IMAGES",
+      type: "GET_FRIENDS",
       payload: userID,
     });
   }, [props.match.params.userID]);
