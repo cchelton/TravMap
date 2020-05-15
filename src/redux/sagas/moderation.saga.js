@@ -22,9 +22,9 @@ function* getAllImages() {
  * toggle an image's reviewed status.
  */
 function* reviewImage(action) {
-  const imageID = action.imageID;
+  const imageID = action.payload;
 
-  yield axios.put(`/api/image/review/${imageID}`);
+  yield axios.put(`/api/moderation/review-image/${imageID}`);
   yield put({ type: "MOD_GET_IMAGES" });
 }
 

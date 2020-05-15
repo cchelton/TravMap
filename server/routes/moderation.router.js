@@ -73,7 +73,7 @@ router.get("/all-images", rejectUnauthenticated, (req, res) => {
  * Toggles a photo's reviewed status.
  * Photo is selected by its "id".
  */
-router.put("/review/:imageID", rejectUnauthenticated, (req, res) => {
+router.put("/review-image/:imageID", rejectUnauthenticated, (req, res) => {
   const imageID = req.params.imageID;
   const queryText = `UPDATE "image" SET "reviewed" = (NOT "reviewed") WHERE id=$1;`;
   if (req.user.moderator) {
