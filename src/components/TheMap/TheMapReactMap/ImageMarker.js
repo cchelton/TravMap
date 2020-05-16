@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   makeStyles,
-  withStyles,
   ButtonBase,
-  Menu,
   Typography,
   Popover,
   Card,
@@ -28,26 +26,6 @@ const useStyles = makeStyles({
     maxHeight: "70vh",
   },
 });
-
-const StyledMenu = withStyles({
-  paper: {
-    border: "1px solid #d3d4d5",
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "center",
-      horizontal: "center",
-    }}
-    transformOrigin={{
-      vertical: "center",
-      horizontal: "center",
-    }}
-    {...props}
-  />
-));
 
 /**
  * Circular image map marker.

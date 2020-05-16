@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import DropZoneS3Uploader from "react-dropzone-s3-uploader";
 import {
-  withStyles,
-  Menu,
-  MenuItem,
   makeStyles,
   TextField,
   Button,
@@ -42,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
  */
 function DropZone(props) {
   const [showAddressBox, updateSAB] = useState(false); // show/hide the address input field
-  const [showPostButton, updateSPB] = useState(false); //  show/hide the post button
   const [addressBox, updateAddressBox] = useState(""); //  address input field state
   const [imgURL, updateImgURL] = useState("");
   const [imgNotesBox, updateImgNotes] = useState("");
@@ -55,25 +51,14 @@ function DropZone(props) {
     updateImgURL(""); //  reset img url
     // reset what's showing in the drop zone
     updateSAB(false);
-    updateSPB(false);
   };
 
   const handleAddressChange = (event) => {
     updateAddressBox(event.target.value);
-    if (addressBox !== "" && imgTitleBox !== "") {
-      updateSPB(true);
-    } else {
-      updateSPB(false);
-    }
   };
 
   const handleTitleChange = (event) => {
     updateImgTitle(event.target.value);
-    if (addressBox !== "" && imgTitleBox !== "") {
-      updateSPB(true);
-    } else {
-      updateSPB(false);
-    }
   };
 
   const handleNotesChange = (event) => {
@@ -82,6 +67,16 @@ function DropZone(props) {
 
   //
   // S3Uploader Stuff
+
+  const imgDisplay = ({ uploadedFile }) => (
+    <div className="rdsu-image" id="temp-img-delete-me-later">
+      <img
+        id="temp-img-delete-me-later"
+        src={uploadedFile.fileUrl}
+        alt="uploaded-img-preview"
+      />
+    </div>
+  );
 
   const uploadOptions = {
     server: "http://localhost:5000",
@@ -157,6 +152,7 @@ function DropZone(props) {
             maxSize={1024 * 1024 * 5}
             upload={uploadOptions}
             style={dropzoneStyle}
+            imageComponent={imgDisplay}
           />
           <div>
             {showAddressBox && (
@@ -186,7 +182,7 @@ function DropZone(props) {
             )}
           </div>
           <div>
-            {showPostButton && (
+            {addressBox && imgNotesBox && imgTitleBox && (
               <Button onClick={handlePost} variant="outlined">
                 POST
               </Button>

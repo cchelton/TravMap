@@ -11,7 +11,7 @@ class TheMapReactMap extends Component {
       height: this.props.mapHeight,
       latitude: 39.0997,
       longitude: -94.5786,
-      zoom: 8,
+      zoom: 1,
     },
   };
 
