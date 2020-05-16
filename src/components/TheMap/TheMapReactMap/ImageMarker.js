@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import {
   makeStyles,
-  withStyles,
   ButtonBase,
-  Menu,
-  MenuItem,
   Typography,
+  Popover,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
 } from "@material-ui/core";
 import { Marker } from "react-map-gl";
+import ImageDeleteButton from "../../ImageDeleteButton/ImageDeleteButton";
 
 const useStyles = makeStyles({
   img: {
@@ -20,29 +23,9 @@ const useStyles = makeStyles({
   },
   expandedImg: {
     maxWidth: "100vh",
-    maxHeight: "80vh",
+    maxHeight: "70vh",
   },
 });
-
-const StyledMenu = withStyles({
-  paper: {
-    border: "1px solid #d3d4d5",
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "center",
-      horizontal: "center",
-    }}
-    transformOrigin={{
-      vertical: "center",
-      horizontal: "center",
-    }}
-    {...props}
-  />
-));
 
 /**
  * Circular image map marker.
@@ -55,6 +38,9 @@ function ImageMarker(props) {
   const longitude = Number(props.image.longitude);
   const offsetLeft = -25;
   const offsetTop = -25;
+  const userID = props.userID;
+  const ownerID = props.image.owner_id;
+  const imageID = props.image.id;
   const img_url = props.image.img_url;
   const title = props.image.title;
   const notes = props.image.notes;
@@ -81,21 +67,43 @@ function ImageMarker(props) {
       <ButtonBase className={classes.circle} onClick={handleOpen}>
         <img className={classes.img} src={img_url} alt={title} />
       </ButtonBase>
-      <StyledMenu
+      <Popover
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "center",
+          horizontal: "center",
+        }}
       >
-        <MenuItem disableRipple>
-          <img className={classes.expandedImg} src={img_url} alt={title} />
-        </MenuItem>
-        <MenuItem disableRipple>
-          <Typography variant="caption" component="p">
-            {notes}
-          </Typography>
-        </MenuItem>
-      </StyledMenu>
+        <Card>
+          <CardMedia
+            className={classes.expandedImg}
+            component="img"
+            image={img_url}
+            alt={title}
+          />
+          <CardContent>
+            <Typography variant="h6" component="h6">
+              {title}
+            </Typography>
+
+            <Typography variant="caption" component="p">
+              {notes}
+            </Typography>
+          </CardContent>
+          {userID === ownerID && (
+            <CardActions>
+              <ImageDeleteButton imageID={imageID} />
+            </CardActions>
+          )}
+        </Card>
+      </Popover>
     </Marker>
   );
 }

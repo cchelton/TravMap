@@ -36,7 +36,7 @@ class LoginPage extends Component {
       <div>
         {this.props.store.errors.loginMessage && (
           <Typography
-            variant="h2"
+            variant="h4"
             component="h2"
             className="alert"
             role="alert"
@@ -45,10 +45,12 @@ class LoginPage extends Component {
           </Typography>
         )}
         <form className="formPanel" onSubmit={this.login}>
-          <h1>Login</h1>
+          <Typography variant="h3" component="h1">
+            Login
+          </Typography>
           <div>
             <TextField
-              label="username"
+              label="Username"
               type="text"
               name="username"
               value={this.state.username}
@@ -57,17 +59,17 @@ class LoginPage extends Component {
           </div>
           <div>
             <TextField
-              label="password"
+              label="Password"
               type="password"
               name="password"
               value={this.state.password}
               onChange={this.handleTextFieldChangeFor("password")}
             />
           </div>
-          <div>
+          <div className="register-log-btn">
             <Button
-              variant="outlined"
-              color="primary"
+              variant="contained"
+              color="secondary"
               className="log-in"
               type="submit"
               name="submit"
@@ -79,8 +81,8 @@ class LoginPage extends Component {
         </form>
         <center>
           <Button
-            variant="outlined"
-            color="primary"
+            variant="contained"
+            color="secondary"
             type="button"
             className="link-button"
             onClick={() => {

@@ -1,9 +1,23 @@
 import React from "react";
+import { Typography, makeStyles, Divider } from "@material-ui/core";
 
-function Err404Page() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: 15,
+  },
+}));
+
+function Err404Page(props) {
+  const classes = useStyles();
   return (
-    <div>
-      <h1>404 Not found sorry homie</h1>
+    <div className={classes.root}>
+      <Typography variant="h3" component="h1">
+        404 Not Found
+      </Typography>
+      <Divider />
+      <Typography variant="h5" component="h2">
+        Sorry, the page or user you are looking for does not exist.
+      </Typography>
     </div>
   );
 }

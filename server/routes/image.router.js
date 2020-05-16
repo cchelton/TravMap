@@ -52,6 +52,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       });
   } else {
     // if no ids were specified, send bad request
+
     res.sendStatus(400);
   }
 });

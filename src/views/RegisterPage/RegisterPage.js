@@ -41,17 +41,22 @@ class RegisterPage extends Component {
     return (
       <div>
         {this.props.errors.registrationMessage && (
-          <h2 className="alert" role="alert">
+          <Typography
+            variant="h4"
+            component="h2"
+            className="alert"
+            role="alert"
+          >
             {this.props.errors.registrationMessage}
-          </h2>
+          </Typography>
         )}
         <form className="formPanel" onSubmit={this.registerUser}>
-          <Typography variant="h1" component="h1">
+          <Typography variant="h3" component="h1">
             Register User
           </Typography>
           <div>
             <TextField
-              label="username"
+              label="Username"
               type="text"
               name="username"
               value={this.state.username}
@@ -60,7 +65,7 @@ class RegisterPage extends Component {
           </div>
           <div>
             <TextField
-              label="password"
+              label="Password"
               type="password"
               name="password"
               value={this.state.password}
@@ -95,10 +100,10 @@ class RegisterPage extends Component {
             />
           </div>
 
-          <div>
+          <div className="register-log-btn">
             <Button
-              variant="outlined"
-              color="primary"
+              variant="contained"
+              color="secondary"
               className="register"
               type="submit"
               name="submit"
@@ -110,8 +115,8 @@ class RegisterPage extends Component {
         </form>
         <center>
           <Button
-            variant="outlined"
-            color="primary"
+            variant="contained"
+            color="secondary"
             type="button"
             className="link-button"
             onClick={() => {
