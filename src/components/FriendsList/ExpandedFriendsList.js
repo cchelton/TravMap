@@ -7,7 +7,6 @@ import {
   Menu,
   MenuItem,
   Typography,
-  TextField,
   Checkbox,
   IconButton,
 } from "@material-ui/core";
