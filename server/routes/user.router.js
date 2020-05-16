@@ -92,4 +92,25 @@ router.get("/focus", rejectUnauthenticated, (req, res) => {
   }
 });
 
+// search for a user by username
+router.get("/search", (req, res) => {
+  const username = req.query.username;
+  const queryText = `SELECT "id" FROM "user" WHERE "username" = $1;`;
+
+  pool
+    .query(queryText, [username])
+    .then((response) => {
+      if (response.rows.length) {
+        // if there was a user, send that id
+        res.send(response.rows[0]);
+      } else {
+        // no user found, send id -1 to trigger 404
+        res.send({ id: -1 });
+      }
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
