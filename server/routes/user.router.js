@@ -54,7 +54,7 @@ router.post("/logout", (req, res) => {
 // get necessary user data for profile pages
 router.get("/focus", rejectUnauthenticated, (req, res) => {
   try {
-    const userID = req.query.userID;
+    const userID = req.user.id;
     const friendID = req.query.friendID;
 
     if (friendID !== userID) {
