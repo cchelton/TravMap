@@ -7,12 +7,12 @@ import {
   Menu,
   MenuItem,
   Typography,
-  TextField,
   Checkbox,
   IconButton,
 } from "@material-ui/core";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import FriendsListUserSearchBar from "./FriendsListUserSearchBar";
 
 const StyledMenu = withStyles({
   paper: {
@@ -153,9 +153,7 @@ class FriendsList extends Component {
             Friends
           </Typography>
         </MenuItem>
-        <MenuItem>
-          <TextField margin="dense" placeholder="search" disabled />
-        </MenuItem>
+        <FriendsListUserSearchBar />
         {friendElements}
         {requestElements.length !== 0 && (
           <MenuItem>

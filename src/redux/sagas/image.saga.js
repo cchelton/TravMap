@@ -25,7 +25,7 @@ function* getImages(action) {
     // set those images to the image reducer.
     yield put({ type: "SET_IMAGES", payload: response.data });
   } catch (err) {
-    console.log("Image get request failed", err);
+    // console.log("Image get request failed", err);
   }
 }
 
@@ -50,7 +50,7 @@ function* getFocusedUserImages(action) {
     // set those images to the image reducer.
     yield put({ type: "SET_FOCUSED_USER_IMAGES", payload: response.data });
   } catch (err) {
-    console.log("Image get request failed", err);
+    // console.log("Image get request failed", err);
   }
 }
 
@@ -77,7 +77,7 @@ function* postImage(action) {
     yield axios.post("/api/image/add", postData, config);
     yield put({ type: "GET_IMAGES", payload: displayIDs }); // I may need to put an id here if a user's map breaks on upload and displays all images.
   } catch (err) {
-    console.log("Image post request failed", err);
+    // console.log("Image post request failed", err);
   }
 }
 
@@ -95,7 +95,7 @@ function* deleteImage(action) {
     yield axios.delete(`/api/image/delete/${imageID}`, config);
     yield put({ type: "GET_IMAGES", payload: displayIDs }); //  refresh images after delete
   } catch (err) {
-    console.log("Image delete request failed", err);
+    // console.log("Image delete request failed", err);
   }
 }
 

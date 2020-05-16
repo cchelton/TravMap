@@ -14,7 +14,7 @@ function* getAllImages() {
     const response = yield axios.get(`/api/moderation/all-images`, config);
     yield put({ type: "SET_MODERATION_IMAGES", payload: response.data });
   } catch (err) {
-    console.log("err getting all images", err);
+    // console.log("err getting all images", err);
   }
 }
 

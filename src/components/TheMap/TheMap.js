@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, IconButton } from "@material-ui/core";
+import { makeStyles, IconButton, Tooltip } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DropZone from "../DropZone/DropZone";
 import TheMapReactMap from "./TheMapReactMap/TheMapReactMap";
@@ -45,13 +45,15 @@ function TheMap(props) {
         customDisplayID={props.customDisplayID ? props.customDisplayID : null} // send a customDisplayID if it exists
       />
       {props.showAddBtn && (
-        <IconButton
-          color="secondary"
-          className={classes.addBtn}
-          onClick={handleOpen}
-        >
-          <AddCircleIcon className={classes.btnIcon} />
-        </IconButton>
+        <Tooltip title="Post an image" placement="left" arrow>
+          <IconButton
+            color="secondary"
+            className={classes.addBtn}
+            onClick={handleOpen}
+          >
+            <AddCircleIcon className={classes.btnIcon} />
+          </IconButton>
+        </Tooltip>
       )}
       <DropZone anchorEl={anchorEl} handleClose={handleClose} />
     </div>
