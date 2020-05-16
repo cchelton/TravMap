@@ -25,7 +25,7 @@ function* getFriends(action) {
     yield put({ type: "SET_DISPLAY_IDS", payload: [userID, ...displayIDs] });
     yield put({ type: "GET_IMAGES", payload: [userID, ...displayIDs] }); //  Do this here so the initial GET_FRIENDS request loads the initial map
   } catch (err) {
-    console.log("Friend get request failed:", err);
+    // console.log("Friend get request failed:", err);
   }
 }
 
@@ -52,7 +52,7 @@ function* toggleFriendPhotoDisplay(action) {
     yield put({ type: "GET_FRIENDS", payload: userID });
     yield put({ type: "GET_IMAGES", payload: [userID, ...displayIDs] });
   } catch (err) {
-    console.log("Friend photo display toggle failed:", err);
+    // console.log("Friend photo display toggle failed:", err);
   }
 }
 

@@ -32,7 +32,7 @@ function AddFriendButton(props) {
         setTempMode("ADD");
         break;
       default:
-        console.log(`Missing AddFriendButton handler TYPE`);
+        // console.log(`Missing AddFriendButton handler TYPE`);
 
         type = "MISSING TYPE";
     }
