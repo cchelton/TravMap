@@ -28,6 +28,9 @@ const theme = createMuiTheme({
     primary: { main: "#274659" },
     secondary: { main: "#F2B807" },
   },
+  typography: {
+    fontFamily: "Playfair+Display, 'Segoe UI', Helvetica, Arial, sans-serif",
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
