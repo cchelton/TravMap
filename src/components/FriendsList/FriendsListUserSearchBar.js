@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { MenuItem, TextField } from "@material-ui/core";
+import { MenuItem, TextField, Tooltip } from "@material-ui/core";
 
 function FriendsListUserSearchBar(props) {
   const [text, updateText] = useState("");
@@ -26,16 +26,22 @@ function FriendsListUserSearchBar(props) {
   };
 
   return (
-    <MenuItem>
-      <form onSubmit={handleSearch}>
-        <TextField
-          value={text}
-          onChange={handleChange}
-          margin="dense"
-          placeholder="search users"
-        />
-      </form>
-    </MenuItem>
+    <Tooltip
+      title={`Type a username here and press "enter" to search`}
+      placement="left"
+      arrow
+    >
+      <MenuItem>
+        <form onSubmit={handleSearch}>
+          <TextField
+            value={text}
+            onChange={handleChange}
+            margin="dense"
+            placeholder="search users"
+          />
+        </form>
+      </MenuItem>
+    </Tooltip>
   );
 }
 

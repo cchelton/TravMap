@@ -8,6 +8,7 @@ import {
   Button,
   Popover,
   Typography,
+  Tooltip,
 } from "@material-ui/core";
 import axios from "axios";
 
@@ -26,6 +27,9 @@ const dropzoneStyle = {
 const useStyles = makeStyles((theme) => ({
   popoverWrapper: {
     padding: 10,
+  },
+  maxWidth130: {
+    maxWidth: 130,
   },
 }));
 
@@ -68,16 +72,6 @@ function DropZone(props) {
   //
   // S3Uploader Stuff
 
-  const imgDisplay = ({ uploadedFile }) => (
-    <div className="rdsu-image" id="temp-img-delete-me-later">
-      <img
-        id="temp-img-delete-me-later"
-        src={uploadedFile.fileUrl}
-        alt="uploaded-img-preview"
-      />
-    </div>
-  );
-
   const uploadOptions = {
     server: "http://localhost:5000",
     signingUrlQueryParams: { uploadType: "avatar" },
@@ -105,14 +99,12 @@ function DropZone(props) {
           displayIDs,
         },
       });
+
       handleClose();
     });
   };
 
   const handleFinishedUpload = (info) => {
-    console.log("File uploaded with filename", info.filename);
-    console.log("Access it on s3 at", info.fileUrl);
-
     updateImgURL(info.fileUrl); //  get the image url ready to post
 
     // open the address bar and other text fields
@@ -142,43 +134,68 @@ function DropZone(props) {
       <div className={classes.popoverWrapper}>
         <div className={classes.popoverHeader}>
           <Typography variant="h6" component="h6">
-            Add image
+            Add an image here
           </Typography>
         </div>
         <div className={classes.popoverContents}>
-          <DropZoneS3Uploader
-            onFinish={handleFinishedUpload}
-            s3Url={s3Url}
-            maxSize={1024 * 1024 * 5}
-            upload={uploadOptions}
-            style={dropzoneStyle}
-            imageComponent={imgDisplay}
-          />
+          <Tooltip
+            classes={{ tooltip: classes.maxWidth130 }}
+            title="Drag and drop an image here, or click to add an image from your device"
+            placement="left"
+            arrow
+          >
+            <DropZoneS3Uploader
+              onFinish={handleFinishedUpload}
+              s3Url={s3Url}
+              maxSize={1024 * 1024 * 5}
+              upload={uploadOptions}
+              style={dropzoneStyle}
+            />
+          </Tooltip>
           <div>
             {showAddressBox && (
-              <TextField
-                label="address"
-                value={addressBox}
-                onChange={handleAddressChange}
-              />
+              <Tooltip
+                classes={{ tooltip: classes.maxWidth130 }}
+                title="Enter the address where this picture was taken"
+                placement="left"
+                arrow
+              >
+                <TextField
+                  label="address"
+                  value={addressBox}
+                  onChange={handleAddressChange}
+                />
+              </Tooltip>
             )}
           </div>
           <div>
             {showAddressBox && (
-              <TextField
-                label="title"
-                value={imgTitleBox}
-                onChange={handleTitleChange}
-              />
+              <Tooltip
+                classes={{ tooltip: classes.maxWidth130 }}
+                title="Enter a title for the photo"
+                placement="left"
+              >
+                <TextField
+                  label="title"
+                  value={imgTitleBox}
+                  onChange={handleTitleChange}
+                />
+              </Tooltip>
             )}
           </div>
           <div>
             {showAddressBox && (
-              <TextField
-                label="notes"
-                value={imgNotesBox}
-                onChange={handleNotesChange}
-              />
+              <Tooltip
+                classes={{ tooltip: classes.maxWidth130 }}
+                title="Add any notes about this photo"
+                placement="left"
+              >
+                <TextField
+                  label="notes"
+                  value={imgNotesBox}
+                  onChange={handleNotesChange}
+                />
+              </Tooltip>
             )}
           </div>
           <div>
