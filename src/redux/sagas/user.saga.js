@@ -25,11 +25,10 @@ function* fetchUser() {
 }
 
 function* focusUser(action) {
-  const userID = action.payload.userID;
   const friendID = action.payload.friendID;
   const config = {
     headers: { "Content-Type": "application/json" },
-    params: { friendID, userID },
+    params: { friendID },
     withCredentials: true,
   };
 
@@ -38,9 +37,23 @@ function* focusUser(action) {
   yield put({ type: "GET_FOCUSED_USER_IMAGES", payload: friendID });
 }
 
+function* searchUser(action) {
+  const username = action.payload.username;
+  const goToUser = action.payload.goToUser;
+  const config = {
+    headers: { "Content-Type": "application/json" },
+    params: { username },
+    withCredentials: true,
+  };
+
+  const response = yield axios.get(`/api/user/search`, config);
+  yield goToUser(response.data.id);
+}
+
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
   yield takeLatest("FOCUS_USER", focusUser);
+  yield takeLatest("SEARCH_USER", searchUser);
 }
 
 export default userSaga;
