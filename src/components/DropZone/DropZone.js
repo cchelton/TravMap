@@ -53,6 +53,8 @@ function DropZone(props) {
     props.handleClose();
     updateAddressBox(""); //  clear the input field on close
     updateImgURL(""); //  reset img url
+    updateImgNotes(""); // reset img notes
+    updateImgTitle(""); // reset img title
     // reset what's showing in the drop zone
     updateSAB(false);
   };
@@ -156,7 +158,7 @@ function DropZone(props) {
             {showAddressBox && (
               <Tooltip
                 classes={{ tooltip: classes.maxWidth130 }}
-                title="Enter the address where this picture was taken"
+                title="Enter the address or coordinates of where this picture was taken"
                 placement="left"
                 arrow
               >

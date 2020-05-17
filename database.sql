@@ -28,5 +28,6 @@ CREATE TABLE "user_relationship" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int references "user",
   "friend_id" int references "user",
-  "confirmed_request" boolean
+  "confirmed_request" boolean,
+  "display_user_photos_on_friend_map" boolean,
 );
