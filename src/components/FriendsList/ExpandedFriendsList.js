@@ -147,6 +147,11 @@ class FriendsList extends Component {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        PaperProps={{
+          style: {
+            height: "50vh",
+          },
+        }}
       >
         <MenuItem onClick={handleClose}>
           <Typography variant="subtitle1" component="p">
