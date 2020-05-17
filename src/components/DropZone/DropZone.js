@@ -201,7 +201,7 @@ function DropZone(props) {
             )}
           </div>
           <div>
-            {addressBox && imgNotesBox && imgTitleBox && (
+            {addressBox && (
               <Button onClick={handlePost} variant="outlined">
                 POST
               </Button>
