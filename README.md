@@ -61,28 +61,28 @@ TravMap has 2 types of users:
 
 ## Built With
 
-React
-Redux
-Redux-Saga
-Node
-Express
-PostgreSQL
-Material-UI
-MapBox API
-OpenCage API
-AWS S3
-react-map-gl
-react-sizeme
-react-dropzone-s3-uploader
-Axios
-passport
-passport-local
-bcrypt
-body-parser
-cookie-session
-dotenv
-pg
-prop-types
+- React
+- Redux
+- Redux-Saga
+- Node
+- Express
+- PostgreSQL
+- Material-UI
+- MapBox API
+- OpenCage API
+- AWS S3
+- react-map-gl
+- react-sizeme
+- react-dropzone-s3-uploader
+- Axios
+- passport
+- passport-local
+- bcrypt
+- body-parser
+- cookie-session
+- dotenv
+- pg
+- prop-types
 
 ## License
 
