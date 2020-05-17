@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
+import { Button, TextField, Typography } from "@material-ui/core";
 
 class LoginPage extends Component {
   state = {
@@ -20,11 +21,11 @@ class LoginPage extends Component {
         },
       });
     } else {
-      this.props.dispatch({ type: "LOGIN_INPUT_ERROR" });
+      this.props.dispatch({ type: "LOGIN_TextField_ERROR" });
     }
   }; // end login
 
-  handleInputChangeFor = (propertyName) => (event) => {
+  handleTextFieldChangeFor = (propertyName) => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
@@ -34,45 +35,54 @@ class LoginPage extends Component {
     return (
       <div>
         {this.props.store.errors.loginMessage && (
-          <h2 className="alert" role="alert">
+          <Typography
+            variant="h4"
+            component="h2"
+            className="alert"
+            role="alert"
+          >
             {this.props.store.errors.loginMessage}
-          </h2>
+          </Typography>
         )}
         <form className="formPanel" onSubmit={this.login}>
-          <h1>Login</h1>
+          <Typography variant="h3" component="h1">
+            Login
+          </Typography>
           <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor("username")}
-              />
-            </label>
+            <TextField
+              label="Username"
+              type="text"
+              name="username"
+              value={this.state.username}
+              onChange={this.handleTextFieldChangeFor("username")}
+            />
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor("password")}
-              />
-            </label>
+            <TextField
+              label="Password"
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleTextFieldChangeFor("password")}
+            />
           </div>
-          <div>
-            <input
+          <div className="register-log-btn">
+            <Button
+              variant="contained"
+              color="secondary"
               className="log-in"
               type="submit"
               name="submit"
               value="Log In"
-            />
+            >
+              Log In
+            </Button>
           </div>
         </form>
         <center>
-          <button
+          <Button
+            variant="contained"
+            color="secondary"
             type="button"
             className="link-button"
             onClick={() => {
@@ -80,7 +90,7 @@ class LoginPage extends Component {
             }}
           >
             Register
-          </button>
+          </Button>
         </center>
       </div>
     );

@@ -18,23 +18,17 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post("/register", (req, res, next) => {
-  const [username, first_name, last_name, date_of_birth] = [
-    req.body.username,
-    req.body.first_name,
-    req.body.last_name,
-    req.body.date_of_birth,
-  ];
+  const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const date_of_birth = req.body.date_of_birth;
 
   const queryText = `INSERT INTO "user" (username, password, first_name, last_name, date_of_birth, moderator) VALUES ($1, $2, $3, $4, $5, 'FALSE') RETURNING id`;
+  const queryData = [username, password, first_name, last_name, date_of_birth];
+
   pool
-    .query(queryText, [
-      username,
-      password,
-      first_name,
-      last_name,
-      date_of_birth,
-    ])
+    .query(queryText, queryData)
     .then(() => res.sendStatus(201))
     .catch((err) => {
       // console.log(err);
@@ -55,6 +49,76 @@ router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
+});
+
+// get necessary user data for profile pages
+router.get("/focus", rejectUnauthenticated, (req, res) => {
+  try {
+    const userID = req.user.id;
+    const friendID = req.query.friendID;
+
+    if (friendID !== userID) {
+      // run this query if the user isn't on their own page
+      const queryData = [userID, friendID];
+      // const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+      // FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+      // WHERE "user"."id" = $1 AND ("user_relationship"."friend_id" = $2 OR "confirmed_request" = FALSE OR "user_relationship"."friend_id" IS NULL);
+      // `;
+      const queryText = `SELECT "username", "first_name", "last_name", "moderator", "confirmed_request" FROM "user_relationship"
+    FULL JOIN "user" ON "user"."id" = "user_relationship"."friend_id"
+    WHERE ("user_id" = $1 AND "friend_id" = $2)
+    UNION ALL
+    SELECT "username", "first_name", "last_name", "moderator", NULL as "confirmed_request" FROM "user"
+    WHERE "user"."id" = $2;
+    `;
+      pool
+        .query(queryText, queryData)
+        .then((response) => {
+          res.send(response.rows);
+        })
+        .catch((err) => {
+          res.sendStatus(500);
+        });
+    } else {
+      // run this one if they are
+      const queryText = `SELECT "username", "first_name", "last_name", "moderator" FROM "user" WHERE "id" = $1;`;
+      pool
+        .query(queryText, [userID])
+        .then((response) => {
+          res.send(response.rows);
+        })
+        .catch((err) => {
+          res.sendStatus(500);
+        });
+    }
+  } catch (err) {
+    res.sendStatus(403);
+  }
+});
+
+// search for a user by username
+router.get("/search", rejectUnauthenticated, (req, res) => {
+  try {
+    const username = req.query.username;
+    const queryText = `SELECT "id" FROM "user" WHERE "username" = $1;`;
+
+    pool
+      .query(queryText, [username])
+      .then((response) => {
+        if (response.rows.length) {
+          // if there was a user, send that id
+          res.send(response.rows[0]);
+        } else {
+          // no user found, send id -1 to trigger 404
+          res.send({ id: -1 });
+        }
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+      });
+  } catch (err) {
+    res.sendStatus(403);
+  }
 });
 
 module.exports = router;
