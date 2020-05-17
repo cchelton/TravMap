@@ -158,7 +158,7 @@ function DropZone(props) {
             {showAddressBox && (
               <Tooltip
                 classes={{ tooltip: classes.maxWidth130 }}
-                title="Enter the address where this picture was taken"
+                title="Enter the address or coordinates of where this picture was taken"
                 placement="left"
                 arrow
               >
