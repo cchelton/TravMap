@@ -53,6 +53,8 @@ function DropZone(props) {
     props.handleClose();
     updateAddressBox(""); //  clear the input field on close
     updateImgURL(""); //  reset img url
+    updateImgNotes(""); // reset img notes
+    updateImgTitle(""); // reset img title
     // reset what's showing in the drop zone
     updateSAB(false);
   };
