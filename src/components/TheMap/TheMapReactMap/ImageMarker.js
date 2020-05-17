@@ -106,7 +106,7 @@ function ImageMarker(props) {
           </CardContent>
           {userID === ownerID && (
             <CardActions>
-              <ImageDeleteButton imageID={imageID} />
+              <ImageDeleteButton imageID={imageID} handleClose={handleClose} />
             </CardActions>
           )}
         </Card>
