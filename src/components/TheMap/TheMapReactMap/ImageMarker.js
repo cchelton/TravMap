@@ -28,6 +28,9 @@ const useStyles = makeStyles({
   media: {
     width: "auto",
   },
+  useImageWidthForCaptionWidth: {
+    display: "table-caption",
+  },
 });
 
 /**
@@ -86,29 +89,34 @@ function ImageMarker(props) {
         }}
       >
         <Card>
-          <CardMedia
-            className={classes.expandedImg}
-            component="img"
-            image={img_url}
-            alt={title}
-            classes={{
-              media: classes.media,
-            }}
-          />
-          <CardContent>
-            <Typography variant="h6" component="h6">
-              {title}
-            </Typography>
+          <div className={classes.useImageWidthForCaptionWidth}>
+            <CardMedia
+              className={classes.expandedImg}
+              component="img"
+              image={img_url}
+              alt={title}
+              classes={{
+                media: classes.media,
+              }}
+            />
+            <CardContent>
+              <Typography variant="h6" component="h6">
+                {title}
+              </Typography>
 
-            <Typography variant="caption" component="p">
-              {notes}
-            </Typography>
-          </CardContent>
-          {userID === ownerID && (
-            <CardActions>
-              <ImageDeleteButton imageID={imageID} handleClose={handleClose} />
-            </CardActions>
-          )}
+              <Typography variant="caption" component="p">
+                {notes}
+              </Typography>
+            </CardContent>
+            {userID === ownerID && (
+              <CardActions>
+                <ImageDeleteButton
+                  imageID={imageID}
+                  handleClose={handleClose}
+                />
+              </CardActions>
+            )}
+          </div>
         </Card>
       </Popover>
     </Marker>
