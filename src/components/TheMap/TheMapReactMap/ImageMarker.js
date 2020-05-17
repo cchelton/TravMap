@@ -22,8 +22,11 @@ const useStyles = makeStyles({
     borderRadius: "50%",
   },
   expandedImg: {
-    maxWidth: "100vh",
     maxHeight: "70vh",
+    maxWidth: "100vw",
+  },
+  media: {
+    width: "auto",
   },
 });
 
@@ -32,6 +35,7 @@ const useStyles = makeStyles({
  * Shows full image & details on click.
  *
  * Needs image prop.
+
  */
 function ImageMarker(props) {
   const latitude = Number(props.image.latitude);
@@ -87,6 +91,9 @@ function ImageMarker(props) {
             component="img"
             image={img_url}
             alt={title}
+            classes={{
+              media: classes.media,
+            }}
           />
           <CardContent>
             <Typography variant="h6" component="h6">
