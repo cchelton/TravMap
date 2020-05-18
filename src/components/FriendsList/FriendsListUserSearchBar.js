@@ -6,6 +6,7 @@ import { MenuItem, TextField, Tooltip } from "@material-ui/core";
 function FriendsListUserSearchBar(props) {
   const [text, updateText] = useState("");
   const handleChange = (event) => {
+    event.stopPropagation();
     updateText(event.target.value);
   };
 
