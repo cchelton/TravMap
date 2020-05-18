@@ -5,8 +5,13 @@ import { MenuItem, TextField, Tooltip } from "@material-ui/core";
 
 function FriendsListUserSearchBar(props) {
   const [text, updateText] = useState("");
-  const handleChange = (event) => {
+
+  const stopMenuPropagation = (event) => {
     event.stopPropagation();
+  };
+
+  const handleChange = (event) => {
+    stopMenuPropagation(event);
     updateText(event.target.value);
   };
 
@@ -37,6 +42,7 @@ function FriendsListUserSearchBar(props) {
           <TextField
             value={text}
             onChange={handleChange}
+            onKeyDown={stopMenuPropagation}
             margin="dense"
             placeholder="search users"
           />
