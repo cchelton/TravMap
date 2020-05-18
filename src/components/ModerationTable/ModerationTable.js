@@ -36,6 +36,11 @@ const useStyles = (theme) => ({
     maxHeight: "80vh",
     maxWidth: "80vw",
   },
+  expandedImage: {
+    maxHeight: "80vh",
+    maxWidth: "100vw",
+    width: "auto",
+  },
 });
 
 class ModerationTable extends Component {
@@ -122,6 +127,7 @@ class ModerationTable extends Component {
             >
               <Card>
                 <CardMedia
+                  className={classes.expandedImage}
                   component="img"
                   image={item.img_url}
                   alt={item.title}
