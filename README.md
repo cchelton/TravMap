@@ -91,7 +91,3 @@ TravMap has 2 types of users:
 ## Acknowledgement
 
 Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped me to make this application a reality. (Thank your people)
-
-## Support
-
-If you have suggestions or issues, please email me at [ccheltonap@gmail.com](mailto:ccheltonap@gmail.com)
