@@ -46,10 +46,10 @@ Link to software that is required to install the app (e.g. node).
     * [https://www.mapbox.com/](https://www.mapbox.com/)
 6. Set Environmental Variables.
     * SERVER_SESSION_SECRET = a string of random characters with more than 8 characters. [Here's a generator](https://passwordsgenerator.net/)
-    * AWS_ACCESS_KEY_ID = Your AWS S3 Access Key
-    * AWS_SECRET_ACCESS_KEY = Your AWS S3 Secret Access Key
-    * REACT_APP_OPENCAGE_API_KEY = Your OpenCage Geocoder API Key
-    * REACT_APP_MAPBOX_API_KEP = Your MapBox API Key
+    * `AWS_ACCESS_KEY_ID` = Your AWS S3 Access Key
+    * `AWS_SECRET_ACCESS_KEY` = Your AWS S3 Secret Access Key
+    * `REACT_APP_OPENCAGE_API_KEY` = Your OpenCage Geocoder API Key
+    * `REACT_APP_MAPBOX_API_KEY` = Your MapBox API Key
 
 <strong>EITHER</strong>
 
