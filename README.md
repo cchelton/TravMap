@@ -43,7 +43,7 @@ Link to software that is required to install the app (e.g. node).
 5. Register for API Keys
     * [Amazon Web Services S3](https://aws.amazon.com/s3/) (AWS S3)
     * [OpenCage Geocoder](https://opencagedata.com/)
-    * [https://www.mapbox.com/](https://www.mapbox.com/)
+    * [Mapbox](https://www.mapbox.com/)
 6. Set Environmental Variables.
     * SERVER_SESSION_SECRET = a string of random characters with more than 8 characters. [Here's a generator](https://passwordsgenerator.net/)
     * `AWS_ACCESS_KEY_ID` = Your AWS S3 Access Key
