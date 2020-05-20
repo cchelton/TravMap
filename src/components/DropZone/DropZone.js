@@ -75,7 +75,7 @@ function DropZone(props) {
   // S3Uploader Stuff
 
   const uploadOptions = {
-    server: "https://travmap.herokuapp.com/", // localhost:5000 for dev
+    server: "https://travmap.herokuapp.com", // localhost:5000 for dev
 
     signingUrlQueryParams: { uploadType: "avatar" },
   };
