@@ -75,7 +75,8 @@ function DropZone(props) {
   // S3Uploader Stuff
 
   const uploadOptions = {
-    server: process.env.REACT_APP_HEROKU_URL || "http://localhost:5000", //  REACT_APP_URL is the url of your site. This is how uploads do stuff.
+    server: "https://travmap.herokuapp.com/", // localhost:5000 for dev
+
     signingUrlQueryParams: { uploadType: "avatar" },
   };
   const s3Url = "https://travmap-bucket.s3.amazonaws.com";
