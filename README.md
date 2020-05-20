@@ -1,7 +1,7 @@
-![MIT LICENSE](https://img.shields.io/github/license/scottbromander/the_marketplace.svg?style=flat-square)
-![REPO SIZE](https://img.shields.io/github/repo-size/scottbromander/the_marketplace.svg?style=flat-square)
-![TOP_LANGUAGE](https://img.shields.io/github/languages/top/scottbromander/the_marketplace.svg?style=flat-square)
-![FORKS](https://img.shields.io/github/forks/scottbromander/the_marketplace.svg?style=social)
+![MIT LICENSE](https://img.shields.io/github/license/cchelton/TravMap.svg?style=flat-square)
+![REPO SIZE](https://img.shields.io/github/repo-size/cchelton/TravMap.svg?style=flat-square)
+![TOP_LANGUAGE](https://img.shields.io/github/languages/top/cchelton/TravMap.svg?style=flat-square)
+![FORKS](https://img.shields.io/github/forks/cchelton/TravMap.svg?style=social)
 
 # TravMap
 
@@ -15,7 +15,17 @@ To see the fully functional site, please visit: [DEPLOYED VERSION OF APP](www.he
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+See all your and your friends' photos on the map. Also, toggle seeing your friends' photos from the Friends List.
+![Your photos are pinned to the spot where they were taken](./documentation/images/readme3.png)
+
+Click a photo on the map to expand it.
+![See photo details, show ](./documentation/images/readme2.png)
+
+View a single person's photos.
+![A person's page displays their photos](./documentation/images/readme4.png)
+
+Moderate the network. Flag images for review. Delete offensive photos.
+![The moderation table displays all the images on the network.](./documentation/images/readme5.png)
 
 ### Prerequisites
 
