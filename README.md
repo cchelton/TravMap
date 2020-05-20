@@ -40,20 +40,30 @@ Link to software that is required to install the app (e.g. node).
 2. Run the queries in `database.sql`. This will create the necessary tables for the TravMap. It is built on [Postgres](https://www.postgresql.org/download/), so you will need to have that installed. I recommend [Postico](https://eggerapps.at/postico/) to run your queries.
 3. Navigate to the TravMap directory in your terminal.
 4. Run `npm install` to install the necessary dependencies
+5. Register for API Keys
+    * [Amazon Web Services S3](https://aws.amazon.com/s3/) (AWS S3)
+    * [OpenCage Geocoder](https://opencagedata.com/)
+    * [https://www.mapbox.com/](https://www.mapbox.com/)
+6. Set Environmental Variables.
+    * SERVER_SESSION_SECRET = a string of random characters with more than 8 characters. [Here's a generator](https://passwordsgenerator.net/)
+    * AWS_ACCESS_KEY_ID = Your AWS S3 Access Key
+    * AWS_SECRET_ACCESS_KEY = Your AWS S3 Secret Access Key
+    * REACT_APP_OPENCAGE_API_KEY = Your OpenCage Geocoder API Key
+    * REACT_APP_MAPBOX_API_KEP = Your MapBox API Key
 
 <strong>EITHER</strong>
 
 For Development:
 
-5. Run `npm run server` to start your server.
-6. Run `npm run client` to start your client.
+7. Run `npm run server` to start your server.
+8. Run `npm run client` to start your client.
 
 <strong>OR</strong>
 
 For Production:
 
-5. Run `npm run build` to create a production build.
-6. Run `npm start` to start the application server.
+7. Run `npm run build` to create a production build.
+8. Run `npm start` to start the application server.
 
 ## Usage
 
