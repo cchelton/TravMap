@@ -118,7 +118,7 @@ router.delete("/delete/:imageID", rejectUnauthenticated, (req, res) => {
           .catch((err) => {
             res.sendStatus(500);
           });
-      } else if (moderatorStatus === "true") {
+      } else if (moderatorStatus) {
         // the user is a moderator, allow them to delete
         let queryText = `DELETE FROM "image" WHERE id = $1;`;
 
